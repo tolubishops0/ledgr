@@ -61,6 +61,24 @@ export const signIn = async (email: string, password: string) => {
   return { success: true };
 };
 
+export const requestPasswordReset = async (email: string) => {
+  const supabase = createClient();
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${window.location.origin}/reset-password`,
+  });
+  if (error) throw new Error(error.message);
+  return { success: true };
+};
+
+export const updatePasswordOnAuth = async (newPassword: string) => {
+  const supabase = createClient();
+  const { error } = await supabase.auth.updateUser({
+    password: newPassword,
+  });
+  if (error) throw new Error(error.message);
+  return { success: true };
+};
+
 export const signOut = async () => {
   const supabase = createClient();
   const { error } = await supabase.auth.signOut();
@@ -80,8 +98,6 @@ export const signInWithGoogle = async () => {
   if (error) throw new Error(error.message);
   return { success: true };
 };
-
-// FOR PROLFIEL ACTION
 
 export const updateProfile = async (updates: {
   full_name?: string;

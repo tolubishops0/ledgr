@@ -31,7 +31,7 @@ export default function LoginPage() {
       const res = await signIn(email, password);
       if (res.success) {
         toast.success("welcome back!", { duration: 5000 });
-        router.push("/");
+        router.push("/overview");
       }
     } catch (error: unknown) {
       toast.error(
@@ -48,22 +48,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 flex items-center justify-center px-4">
+    <div className="bg-gray-50 dark:bg-zinc-950 flex items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
         className="w-full max-w-sm"
       >
-        <div className="text-center mb-8">
-          <span className="text-3xl font-extrabold text-green-600 dark:text-green-400 tracking-tight">
-            Ledgr
-          </span>
-          <p className="mt-2 text-sm text-gray-500 dark:text-zinc-400">
-            Sign in to your account
-          </p>
-        </div>
-
         <Card>
           <CardContent className="py-6">
             <Button
