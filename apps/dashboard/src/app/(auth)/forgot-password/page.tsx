@@ -55,7 +55,7 @@ export default function ForgotPasswordPage() {
                                     exit={{ opacity: 0 }}
                                 >
                                     <p className="text-sm text-gray-600 dark:text-zinc-400 mb-6 text-center">
-                                        Enter your email and we'll send you a link to get back into your account.
+                                        Enter your email and we&apos;ll send you a link to get back into your account.
                                     </p>
                                     <form onSubmit={handleForgotPassword} className="space-y-4">
                                         <div className="space-y-2">
