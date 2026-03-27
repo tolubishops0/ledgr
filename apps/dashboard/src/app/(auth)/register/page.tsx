@@ -57,26 +57,16 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 flex items-center justify-center px-4 py-10">
+    <div className="bg-gray-50 dark:bg-zinc-950 flex items-center justify-center">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
         className="w-full max-w-sm"
       >
-        <div className="text-center mb-8">
-          <span className="text-3xl font-extrabold text-green-600 dark:text-green-400 tracking-tight">
-            Ledgr
-          </span>
-          <p className="mt-2 text-sm text-gray-500 dark:text-zinc-400">
-            Create your account
-          </p>
-        </div>
-
         <Card>
           <CardContent className="py-6">
             <form onSubmit={handleRegister} className="space-y-4">
-              {/* Full name */}
               <div>
                 <Label htmlFor="fullName">Full name</Label>
                 <Input
