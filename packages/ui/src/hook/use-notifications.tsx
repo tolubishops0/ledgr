@@ -1,13 +1,12 @@
 "use client";
 
-import { createClient } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";
 import { Notification } from "@ledgr/types";
+import { NotificationProps } from "../notification";
 
-export function useNotifications(userId: string) {
+export function useNotifications({ userId, supabase }: NotificationProps) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
-  const supabase = createClient();
 
   useEffect(() => {
     supabase
@@ -22,7 +21,6 @@ export function useNotifications(userId: string) {
         }
       });
 
-    // realtime
     const subscription = supabase
       .channel(`notifications-${userId}`)
       .on(

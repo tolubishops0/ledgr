@@ -20,6 +20,7 @@ import {
 import type { Profile } from "@ledgr/types";
 import { signOut } from "@/lib/core/auth";
 import { UserProvider } from "@/lib/context/user-context";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 const NAV = [
   { href: "/overview", label: "Overview", icon: LayoutDashboard },
@@ -31,8 +32,10 @@ const NAV = [
 
 export default function DashboardShell({
   user,
+  supabase,
   children,
 }: {
+  supabase: SupabaseClient;
   user: Profile;
   children: React.ReactNode;
 }) {
@@ -67,6 +70,7 @@ export default function DashboardShell({
           onMenuClick={() => setMobileOpen(true)}
           activeLabel={activeLabel}
           user={user}
+          supabase={supabase}
           showUserBadge={false}
         />
         <motion.main
