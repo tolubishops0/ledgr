@@ -1,4 +1,3 @@
-
 // 2026-03-24T12:34:56.789Z ===>2026-03
 // export const THIS_MONTH = new Date().toISOString().slice(0, 7);
 
@@ -264,3 +263,14 @@ export function getSpendingByCategory({
     }))
     .filter((c) => c.amount > 0);
 }
+
+// 10000 ==> #10,000
+export const formatNaira = (amount: number, includeSymbol: boolean = true) => {
+  if (!amount) return null;
+  return new Intl.NumberFormat("en-NG", {
+    style: includeSymbol ? "currency" : "decimal",
+    currency: "NGN",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(amount);
+};

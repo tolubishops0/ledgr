@@ -6,6 +6,8 @@ import { Bell, Menu } from "lucide-react";
 import { Avatar } from "./avatar";
 import { initials } from "@ledgr/utils";
 import { Profile } from "@ledgr/types";
+import { useNotifications } from "../../../apps/admin/src/lib/core/hook/use-notifications";
+import { NotificationDropdown } from "./notification";
 
 interface NavbarProps {
   sidebarCollapsed: boolean;
@@ -48,7 +50,6 @@ export function Navbar({
           <Menu size={18} />
         </button>
 
-        {/* Desktop — page title */}
         <span className="hidden lg:block text-sm font-semibold text-gray-900 dark:text-zinc-50">
           {activeLabel}
         </span>
@@ -60,10 +61,11 @@ export function Navbar({
           {badge && (
             <span
               className={`px-1.5 py-0.5 rounded text-[10px] font-bold
-              ${badgeColor === "amber"
+              ${
+                badgeColor === "amber"
                   ? "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400"
                   : "bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400"
-                }`}
+              }`}
             >
               {badge}
             </span>
@@ -72,10 +74,7 @@ export function Navbar({
       </div>
 
       <div className="flex items-center gap-1">
-        <button className="relative p-2 rounded-lg text-gray-500 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors">
-          <Bell size={16} />
-          <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-green-500" />
-        </button>
+        <NotificationDropdown userId={user?.id} />
         <div className="relative ml-1">
           <Avatar
             src={user?.avatar_url ?? undefined}

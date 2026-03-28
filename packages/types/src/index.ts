@@ -1,5 +1,3 @@
-
-
 export type UserStatus = "active" | "suspended";
 export type TransactionType = "income" | "expense";
 
@@ -46,11 +44,10 @@ export type OnboardingData = {
   monthly_income: number;
   budgets: { category_id: string; amount: number }[];
 };
-
+export type NotificationType = "transaction" | "budget" | "user-status";
 
 export type Tab = "profile" | "security" | "appearance";
 export type AdminTab = "profile" | "appearance";
-
 
 export type Filters = {
   search: string;
@@ -60,4 +57,11 @@ export type Filters = {
   toDate: string;
 };
 
-
+export type Notification = {
+  id: string;
+  user_id: string;
+  type: NotificationType;
+  message: string;
+  read: boolean;
+  created_at: string;
+};

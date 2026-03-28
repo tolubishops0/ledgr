@@ -20,4 +20,5 @@ export { Sidebar } from "./side-bar";
 export { SignOut } from "./sign-out";
 export { BottomTabBar } from "./bottom-tab";
 export { Pagination } from "./pagination";
+export { NotificationDropdown } from "./notification";
 export { useActiveHref } from "./use-active-href";
