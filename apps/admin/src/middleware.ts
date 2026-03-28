@@ -5,7 +5,7 @@ const PUBLIC_ROUTES = ["/login"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  let response = NextResponse.next({ request });
+  const supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -18,7 +18,7 @@ export async function middleware(request: NextRequest) {
             request.cookies.set(name, value),
           );
           cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options),
+            supabaseResponse.cookies.set(name, value, options),
           );
         },
       },
@@ -39,7 +39,7 @@ export async function middleware(request: NextRequest) {
   if (PUBLIC_ROUTES.includes(pathname)) {
     if (profile?.is_admin)
       return NextResponse.redirect(new URL("/overview", request.url));
-    return response;
+    return supabaseResponse;
   }
 
   if (!profile?.is_admin) {
@@ -48,12 +48,12 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  response.cookies.set("profile", JSON.stringify(profile), {
+  supabaseResponse.cookies.set("profile", JSON.stringify(profile), {
     path: "/",
     httpOnly: true,
   });
 
-  return response;
+  return supabaseResponse;
 }
 
 export const config = {
