@@ -1,6 +1,5 @@
-import AdminDashboardShell from "@/components/ui/admin-dashboard-shell";
- import { createAdminClient } from "@/lib/supabase/admin";
-import { createClient } from "@/lib/supabase/server";
+import AdminDashboardShell from "@/components/admin-dashboard-shell";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export default async function DashboardLayout({
@@ -8,21 +7,12 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await createClient();
-  const adminSupabase = createAdminClient();
+  const cookieStore = await cookies();
+  const profileCookie = cookieStore.get("profile")?.value;
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect("/login");
+  if (!profileCookie) redirect("/login");
 
-  const { data: profile } = await adminSupabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id)
-    .single();
-
-  if (!profile) redirect("/login");
+  const profile = JSON.parse(profileCookie);
 
   return <AdminDashboardShell user={profile}>{children}</AdminDashboardShell>;
 }

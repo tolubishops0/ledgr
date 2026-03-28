@@ -62,10 +62,11 @@ export function Sidebar({
                 {badge && showUserBadge && (
                   <span
                     className={`px-3 py-0.5 rounded text-[10px] font-bold whitespace-nowrap
-                    ${badgeColor === "amber"
+                    ${
+                      badgeColor === "amber"
                         ? "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400"
                         : "bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400"
-                      }`}
+                    }`}
                   >
                     {badge}
                   </span>
@@ -124,11 +125,14 @@ export function Sidebar({
         })}
       </nav>
 
-      {/* User */}
       <div className="border-t border-gray-200 dark:border-zinc-800 p-3 shrink-0">
         <div className="flex items-center gap-3 overflow-hidden">
           <div className="relative shrink-0">
-            <Avatar initials={initials(user.full_name)} src={user.avatar_url} size="sm" />
+            <Avatar
+              initials={initials(user.full_name)}
+              src={user.avatar_url}
+              size="sm"
+            />
           </div>
           <AnimatePresence initial={false}>
             {!collapsed && (
