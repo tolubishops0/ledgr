@@ -5,7 +5,7 @@ const PUBLIC_ROUTES = ["/login"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  let supabaseResponse = NextResponse.next({ request });
+  let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -14,41 +14,50 @@ export async function middleware(request: NextRequest) {
       cookies: {
         getAll: () => request.cookies.getAll(),
         setAll: (cookiesToSet) => {
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
-          supabaseResponse = NextResponse.next({ request });
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value),
+          );
           cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
+            response.cookies.set(name, value, options),
           );
         },
       },
-    }
+    },
   );
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return NextResponse.redirect(new URL("/login", request.url));
 
-  const isPublic = PUBLIC_ROUTES.includes(pathname);
-  if (isPublic) {
-    if (user) return NextResponse.redirect(new URL("/overview", request.url));
-    return supabaseResponse;
-  }
-
-  if (!user) {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
   const { data: profile } = await supabase
     .from("profiles")
-    .select("is_admin")
+    .select("id, full_name, email, avatar_url, is_admin")
     .eq("id", user.id)
     .single();
 
-  if (!profile?.is_admin) {
-
-    return NextResponse.redirect(new URL("/login?error=unauthorized", request.url));
+  if (PUBLIC_ROUTES.includes(pathname)) {
+    if (profile?.is_admin)
+      return NextResponse.redirect(new URL("/overview", request.url));
+    return response;
   }
 
-  return supabaseResponse;
+  if (!profile?.is_admin) {
+    return NextResponse.redirect(
+      new URL("/login?error=unauthorized", request.url),
+    );
+  }
+
+  response.cookies.set("profile", JSON.stringify(profile), {
+    path: "/",
+    httpOnly: true,
+  });
+
+  return response;
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };

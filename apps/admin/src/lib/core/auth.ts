@@ -1,12 +1,29 @@
 import { redirect } from "next/navigation";
 import { createClient } from "../supabase/client";
 
-
 export const signIn = async (email: string, password: string) => {
   const supabase = createClient();
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) throw new Error(error.message);
-  return { success: true };
+
+  const {
+    data: { user },
+    error: signInError,
+  } = await supabase.auth.signInWithPassword({ email, password });
+  if (signInError) throw new Error(signInError.message);
+  if (!user) throw new Error("Login failed");
+
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("id, full_name, email, avatar_url, is_admin")
+    .eq("id", user.id)
+    .single();
+
+  console.log({ profile });
+
+  if (profileError || !profile?.is_admin) {
+    throw new Error("Unauthorized: admin only. Use autofill to login.");
+  }
+
+  return { success: true, profile };
 };
 
 export const signOut = async () => {
@@ -37,4 +54,3 @@ export const updateProfile = async (updates: {
   if (error) throw new Error(error.message);
   return data;
 };
-

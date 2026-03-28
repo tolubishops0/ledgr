@@ -53,19 +53,10 @@ export async function middleware(request: NextRequest) {
       );
     }
 
-    supabaseResponse.cookies.set(
-      "profile",
-      JSON.stringify({
-        id: profile.id,
-        email: profile.email,
-        avatar_url: profile.avatar_url,
-        full_name: profile.full_name,
-      }),
-      {
-        path: "/",
-        httpOnly: true,
-      },
-    );
+    supabaseResponse.cookies.set("profile", JSON.stringify(profile), {
+      path: "/",
+      httpOnly: true,
+    });
 
     if (isPublicRoute || isRootPath) {
       return NextResponse.redirect(new URL("/overview", request.url));
