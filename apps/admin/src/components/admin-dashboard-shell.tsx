@@ -54,8 +54,8 @@ export default function DashboardShell({
           active={activeHref}
           logout={() => signOut()}
           showUserBadge={true}
-          badge="Admin" />
-
+          badge="Admin"
+        />
 
         <MobileDrawer
           open={mobileOpen}
@@ -63,6 +63,7 @@ export default function DashboardShell({
           navList={NAV}
           user={user}
           active={activeHref}
+          logout={() => signOut()}
         />
         <Navbar
           sidebarCollapsed={collapsed}

@@ -1,5 +1,5 @@
-import AdminDashboardShell from "@/components/ui/admin-dashboard-shell";
- import { createAdminClient } from "@/lib/supabase/admin";
+import AdminDashboardShell from "@/components/admin-dashboard-shell";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 

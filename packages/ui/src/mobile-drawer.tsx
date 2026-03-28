@@ -7,6 +7,7 @@ import { Avatar } from "./avatar";
 import { Profile } from "@ledgr/types";
 import { initials } from "@ledgr/utils";
 import { NavItem } from "./use-active-href";
+import { SignOut } from "./sign-out";
 
 interface MobileDrawerProps {
   open: boolean;
@@ -18,6 +19,7 @@ interface MobileDrawerProps {
   badgeColor?: string;
   active?: string;
   showUserBadge?: boolean;
+  logout: () => void;
 }
 
 export function MobileDrawer({
@@ -30,6 +32,7 @@ export function MobileDrawer({
   badgeColor = "amber",
   showUserBadge = false,
   active,
+  logout,
 }: MobileDrawerProps) {
   return (
     <AnimatePresence>
@@ -43,13 +46,12 @@ export function MobileDrawer({
             onClick={onClose}
           />
           <motion.div
-            className="absolute left-0 top-0 bottom-0 w-64 bg-gray-50 dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-800 flex flex-col"
+            className="absolute left-0 top-0 bottom-0 w-64 bg-gray-50 dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-800 flex flex-col pb-4"
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ duration: 0.25, ease: "easeOut" }}
           >
-            {/* Logo */}
             <div className="flex items-center gap-2 h-16 px-5 border-b border-gray-200 dark:border-zinc-800">
               <span className="text-xl font-extrabold text-green-600 dark:text-green-400">
                 {logo}
@@ -57,17 +59,17 @@ export function MobileDrawer({
               {badge && (
                 <span
                   className={`px-1.5 py-0.5 rounded text-[10px] font-bold
-                  ${badgeColor === "amber"
+                  ${
+                    badgeColor === "amber"
                       ? "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400"
                       : "bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400"
-                    }`}
+                  }`}
                 >
                   {badge}
                 </span>
               )}
             </div>
 
-            {/* Nav */}
             <nav className="flex-1 py-3 px-2 overflow-y-auto">
               {navList.map(({ href, label, icon: Icon }) => {
                 const isActive = active === href;
@@ -90,11 +92,14 @@ export function MobileDrawer({
               })}
             </nav>
 
-            {/* User */}
             <div className="border-t border-gray-200 dark:border-zinc-800 p-4">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <Avatar initials={initials(user.full_name)} src={user.avatar_url} size="sm" />
+                  <Avatar
+                    initials={initials(user.full_name)}
+                    src={user.avatar_url}
+                    size="sm"
+                  />
                   {showUserBadge && (
                     <span className="absolute -bottom-0.5 -right-0.5 px-1 py-px rounded text-[8px] font-bold bg-green-600 text-white leading-none">
                       A
@@ -111,6 +116,8 @@ export function MobileDrawer({
                 </div>
               </div>
             </div>
+
+            <SignOut collapsed={false} onLogout={logout} />
           </motion.div>
         </div>
       )}

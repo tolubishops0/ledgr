@@ -60,6 +60,7 @@ export default function DashboardShell({
           navList={NAV}
           user={user}
           active={activeHref}
+          logout={() => signOut()}
         />
         <Navbar
           sidebarCollapsed={collapsed}
