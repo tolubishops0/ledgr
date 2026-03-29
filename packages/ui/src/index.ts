@@ -22,4 +22,4 @@ export { BottomTabBar } from "./bottom-tab";
 export { Pagination } from "./pagination";
 export { NotificationDropdown } from "./notification";
 export { useActiveHref } from "./use-active-href";
-export { useNotifications } from "./hook/use-notifications";
+export { useNotifications } from "../../../apps/dashboard/src/lib/core/hook/use-notifications";

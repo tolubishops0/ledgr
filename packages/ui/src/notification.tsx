@@ -3,12 +3,10 @@
 import { Bell, Check, CheckCheck, X } from "lucide-react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { SupabaseClient } from "@supabase/supabase-js";
-import { useNotifications } from "./hook/use-notifications";
+import { useNotifications } from "../../../apps/dashboard/src/lib/core/hook/use-notifications";
 
 export interface NotificationProps {
   userId: string;
-  supabase: SupabaseClient;
 }
 
 const typeConfig: Record<string, { icon: string; color: string }> = {
@@ -17,9 +15,9 @@ const typeConfig: Record<string, { icon: string; color: string }> = {
   "user-status": { icon: "👤", color: "text-amber-500" },
 };
 
-export function NotificationDropdown({ userId, supabase }: NotificationProps) {
+export function NotificationDropdown({ userId }: NotificationProps) {
   const { notifications, unreadCount, markAsRead, markAllAsRead } =
-    useNotifications({ userId, supabase });
+    useNotifications(userId);
 
   const [open, setOpen] = useState(false);
 

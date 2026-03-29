@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { Notification } from "@ledgr/types";
-import { NotificationProps } from "../notification";
+import { createClient } from "@/lib/supabase/client";
 
-export function useNotifications({ userId, supabase }: NotificationProps) {
+const supabase = createClient();
+
+export function useNotifications(userId: string) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
-
+  console.log("userId:", userId);
   useEffect(() => {
     supabase
       .from("notifications")
@@ -38,7 +40,9 @@ export function useNotifications({ userId, supabase }: NotificationProps) {
           setUnreadCount((prev) => prev + 1);
         },
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log("subscription status:", status);
+      });
 
     return () => {
       supabase.removeChannel(subscription);

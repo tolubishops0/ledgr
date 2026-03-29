@@ -110,6 +110,10 @@ export default function BudgetsPage() {
       );
     }
   };
+  console.log(
+    budgets.map((item) => item.category?.name),
+    "used budgets",
+  );
   const usedCategoryIds = budgets.map((b) => b.id);
 
   if (loading) return <BudgetsSkeleton />;

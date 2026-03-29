@@ -20,6 +20,7 @@ import {
 import type { Profile } from "@ledgr/types";
 import { signOut } from "@/lib/core/auth";
 import { AdminProvider } from "@/lib/context/admin-context";
+import { createClient } from "@/lib/supabase/client";
 
 const NAV = [
   { href: "/overview", label: "Overview", icon: LayoutDashboard },
@@ -36,6 +37,7 @@ export default function DashboardShell({
   user: Profile;
   children: React.ReactNode;
 }) {
+  const supabase = createClient();
   const [collapsed, setCollapsed] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const pathname = usePathname();

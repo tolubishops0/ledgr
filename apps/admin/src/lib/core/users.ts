@@ -21,7 +21,7 @@ export async function updateUserStatusAction(
 ) {
   const readableStatus = statusMessageMap[status] ?? status;
   const supabase = createAdminClient();
-  const { data, error } = await supabase
+  const { data: res, error } = await supabase
     .from("profiles")
     .update({ status })
     .eq("id", userId)
@@ -30,27 +30,32 @@ export async function updateUserStatusAction(
 
   if (error) throw new Error(error.message);
 
-  if (data) {
+  console.log({ res }, "user being suspended");
+
+  const { data } = await supabase.auth.getUser();
+  console.log({ data }, "admin who suspend");
+
+  if (res) {
     await notifyUser(
       userId,
       "user-status",
       `Your account has been ${readableStatus} by an admin. If this was unexpected, please contact support.`,
     );
 
-    const {
-      data: { user: admin },
-    } = await supabase.auth.getUser();
-
-    if (admin) {
-      await notifyUser(
-        admin.id,
-        "user-status",
-        `User "${data.full_name}" account status updated to "${status}".`,
-      );
-    }
+    // const {
+    //   data: { user },
+    // } = await supabase.auth.getUser();
+    // console.log({ user }, "admin who suspend");
+    // if (user) {
+    //   await notifyUser(
+    //     user.id,
+    //     "user-status",
+    //     `User "${res.full_name}" account status updated to "${status}".`,
+    //   );
+    // }
   }
 
-  return data;
+  return res;
 }
 
 // export async function updateUserStatusAction(userId: string, status: UserStatus) {

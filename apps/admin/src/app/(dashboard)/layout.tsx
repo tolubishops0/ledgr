@@ -9,7 +9,6 @@ export default async function DashboardLayout({
 }) {
   const cookieStore = await cookies();
   const profileCookie = cookieStore.get("profile")?.value;
-
   if (!profileCookie) redirect("/login");
 
   const profile = JSON.parse(profileCookie);

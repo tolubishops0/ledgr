@@ -7,7 +7,6 @@ import { Avatar } from "./avatar";
 import { initials } from "@ledgr/utils";
 import { Profile } from "@ledgr/types";
 import { NotificationDropdown } from "./notification";
-import type { SupabaseClient } from "@supabase/supabase-js";
 
 interface NavbarProps {
   sidebarCollapsed: boolean;
@@ -18,7 +17,6 @@ interface NavbarProps {
   badge?: string;
   badgeColor?: string;
   showUserBadge?: boolean;
-  supabase: SupabaseClient;
 }
 
 export function Navbar({
@@ -30,7 +28,6 @@ export function Navbar({
   badge,
   badgeColor = "amber",
   showUserBadge = false,
-  supabase,
 }: NavbarProps) {
   const leftOffset =
     window.innerWidth >= 1024 ? (sidebarCollapsed ? 64 : 240) : 0;
@@ -76,7 +73,7 @@ export function Navbar({
       </div>
 
       <div className="flex items-center gap-1">
-        <NotificationDropdown userId={user?.id} supabase={supabase} />
+        <NotificationDropdown userId={user?.id} />
         <div className="relative ml-1">
           <Avatar
             src={user?.avatar_url ?? undefined}
