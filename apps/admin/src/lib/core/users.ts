@@ -3,6 +3,7 @@
 import type { UserStatus } from "@ledgr/types";
 import { createAdminClient } from "../supabase/admin";
 import { createClient } from "../supabase/client";
+import { createClient as CreateServerClient } from "../supabase/server";
 
 const statusMessageMap = {
   active: "activated",
@@ -21,6 +22,8 @@ export async function updateUserStatusAction(
 ) {
   const readableStatus = statusMessageMap[status] ?? status;
   const supabase = createAdminClient();
+  const supabaseServer = await CreateServerClient();
+
   const { data: res, error } = await supabase
     .from("profiles")
     .update({ status })
@@ -30,11 +33,6 @@ export async function updateUserStatusAction(
 
   if (error) throw new Error(error.message);
 
-  console.log({ res }, "user being suspended");
-
-  const { data } = await supabase.auth.getUser();
-  console.log({ data }, "admin who suspend");
-
   if (res) {
     await notifyUser(
       userId,
@@ -42,33 +40,20 @@ export async function updateUserStatusAction(
       `Your account has been ${readableStatus} by an admin. If this was unexpected, please contact support.`,
     );
 
-    // const {
-    //   data: { user },
-    // } = await supabase.auth.getUser();
-    // console.log({ user }, "admin who suspend");
-    // if (user) {
-    //   await notifyUser(
-    //     user.id,
-    //     "user-status",
-    //     `User "${res.full_name}" account status updated to "${status}".`,
-    //   );
-    // }
+    const {
+      data: { user: user },
+    } = await supabaseServer.auth.getUser();
+    if (user) {
+      await notifyUser(
+        user.id,
+        "user-status",
+        `User "${res.full_name}" account status updated to "${status}".`,
+      );
+    }
   }
 
   return res;
 }
-
-// export async function updateUserStatusAction(userId: string, status: UserStatus) {
-//     const supabase = createAdminClient()
-//     const { data, error } = await supabase
-//         .from('profiles')
-//         .update({ status })
-//         .eq('id', userId)
-//         .select()
-//         .single()
-//     if (error) throw new Error(error.message)
-//     return data
-// }
 
 export const getAllUsers = async () => {
   const supabase = createAdminClient();

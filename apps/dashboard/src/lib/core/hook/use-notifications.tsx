@@ -9,7 +9,7 @@ const supabase = createClient();
 export function useNotifications(userId: string) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
-  console.log("userId:", userId);
+
   useEffect(() => {
     supabase
       .from("notifications")
