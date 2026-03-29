@@ -3,6 +3,10 @@
   "compilerOptions": {
     "jsx": "preserve"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "../../apps/admin/src/lib/core/hook/use-user.tsx"
+  ],
   "exclude": ["node_modules"]
 }

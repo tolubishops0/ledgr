@@ -61,7 +61,8 @@ export default function BudgetsPage() {
         amount: bgt.amount,
         category_id: bgt.category_id,
         month: bgt.month,
-      }
+        category: bgt.category,
+      };
       const saved = await addBudget(cleanBgt);
       toast.success("Budget added!");
       setBudgets((prev) => prev.map((b) => (b.id === tempId ? saved : b)));
@@ -98,7 +99,7 @@ export default function BudgetsPage() {
         category: bgt.category,
         amount: bgt.amount,
         month: bgt.month,
-      }
+      };
       const saved = await updateBudget(bgt.id, bgtToSend);
       toast.success("Budget updated!");
       setBudgets((prev) => prev.map((b) => (b.id === bgt.id ? saved : b)));
@@ -109,9 +110,15 @@ export default function BudgetsPage() {
       );
     }
   };
-  const usedCategoryIds = budgets.map((b) => b.id);
+
+  const unusedCategories = categories.filter(
+    (item) =>
+      item.name !== "Salary" &&
+      !budgets.some((bug) => bug.category?.id === item.id),
+  );
 
   if (loading) return <BudgetsSkeleton />;
+
   return (
     <div className="p-4 md:p-6 space-y-6 max-w-5xl mx-auto">
       <PageHeader
@@ -168,8 +175,7 @@ export default function BudgetsPage() {
         onSave={handleSave}
         onEdit={handleUpdate}
         existing={editBudget}
-        categories={categories}
-        usedCategoriesIds={usedCategoryIds}
+        unusedCategories={unusedCategories}
       />
 
       <ConfirmDialog

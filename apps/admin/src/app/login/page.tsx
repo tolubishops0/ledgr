@@ -72,7 +72,7 @@ export default function AdminLoginPage() {
             <div className="space-y-0.5">
               <p className="text-xs text-amber-600 dark:text-amber-500">
                 <span className="font-medium">Email:</span>{" "}
-                okafor.kemi@gmail.com
+                kemi.okafor@ledgr.app
               </p>
               <p className="text-xs text-amber-600 dark:text-amber-500">
                 <span className="font-medium">Password:</span> qwerty123
@@ -81,7 +81,7 @@ export default function AdminLoginPage() {
             <Button
               type="button"
               onClick={() => {
-                setEmail("okafor.kemi@gmail.com");
+                setEmail("kemi.okafor@ledgr.app");
                 setPassword("qwerty123");
               }}
               variant="ghost"

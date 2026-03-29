@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { createClient } from "../supabase/client";
 
 export function usePasswordStrength(
   password: string,
@@ -28,3 +29,12 @@ export const strengthMap = [
   { label: "Good", color: "bg-blue-500", text: "text-blue-500" },
   { label: "Strong", color: "bg-green-500", text: "text-green-500" },
 ];
+
+export const notifyUser = async (
+  user_id: string,
+  type: string,
+  message: string,
+) => {
+  const supabase = createClient();
+  await supabase.from("notifications").insert({ user_id, type, message });
+};
