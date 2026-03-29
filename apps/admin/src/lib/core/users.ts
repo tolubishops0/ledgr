@@ -3,7 +3,7 @@
 import type { UserStatus } from "@ledgr/types";
 import { createAdminClient } from "../supabase/admin";
 import { createClient } from "../supabase/client";
-import { createClient as CreateServerClient } from "../supabase/server";
+import { createClient as CreateAuthClient } from "../supabase/server";
 
 const statusMessageMap = {
   active: "activated",
@@ -22,7 +22,7 @@ export async function updateUserStatusAction(
 ) {
   const readableStatus = statusMessageMap[status] ?? status;
   const supabase = createAdminClient();
-  const supabaseServer = await CreateServerClient();
+  const supabaseServer = await CreateAuthClient();
 
   const { data: res, error } = await supabase
     .from("profiles")
@@ -57,9 +57,15 @@ export async function updateUserStatusAction(
 
 export const getAllUsers = async () => {
   const supabase = createAdminClient();
+  const supabaseServer = await CreateAuthClient();
+  const {
+    data: { user: user },
+  } = await supabaseServer.auth.getUser();
+
   const { data, error } = await supabase
     .from("profiles")
     .select("*")
+    .neq("id", user?.id)
     .order("created_at", { ascending: false });
   if (error) throw new Error(error.message);
   return data ?? [];
