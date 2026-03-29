@@ -27,16 +27,14 @@ export function BudgetModal({
   onSave,
   onEdit,
   existing,
-  categories,
-  usedCategoriesIds,
+  unusedCategories,
 }: {
   open: boolean;
   onClose: () => void;
   onSave: (b: Budget) => void;
   onEdit: (b: Budget) => void;
   existing?: Budget | null;
-  categories: Category[];
-  usedCategoriesIds: string[];
+  unusedCategories: Category[];
 }) {
   const [categoryId, setCategoryId] = useState(existing?.category_id ?? "");
   const [amount, setAmount] = useState(existing ? String(existing.amount) : "");
@@ -68,13 +66,6 @@ export function BudgetModal({
     }
     onClose();
   }
-  const usedSet = new Set(usedCategoriesIds);
-
-  const unusedCategories = categories.filter(
-    (c) => !usedSet.has(c.id) && c.name !== "Salary",
-  );
-  // console.log(usedCategoriesIds.map((item) => item.name));
-  // console.log(unusedCategories.map((item) => item.name));
 
   return (
     <Modal

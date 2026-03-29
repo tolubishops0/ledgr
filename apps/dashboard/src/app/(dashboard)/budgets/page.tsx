@@ -110,13 +110,15 @@ export default function BudgetsPage() {
       );
     }
   };
-  console.log(
-    budgets.map((item) => item.category?.name),
-    "used budgets",
+
+  const unusedCategories = categories.filter(
+    (item) =>
+      item.name !== "Salary" &&
+      !budgets.some((bug) => bug.category?.id === item.id),
   );
-  const usedCategoryIds = budgets.map((b) => b.id);
 
   if (loading) return <BudgetsSkeleton />;
+
   return (
     <div className="p-4 md:p-6 space-y-6 max-w-5xl mx-auto">
       <PageHeader
@@ -173,8 +175,7 @@ export default function BudgetsPage() {
         onSave={handleSave}
         onEdit={handleUpdate}
         existing={editBudget}
-        categories={categories}
-        usedCategoriesIds={usedCategoryIds}
+        unusedCategories={unusedCategories}
       />
 
       <ConfirmDialog
