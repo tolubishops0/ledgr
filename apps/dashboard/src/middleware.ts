@@ -36,7 +36,6 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
-  const isRootPath = pathname === "/";
 
   if (user) {
     const { data: profile } = await supabase
@@ -57,14 +56,14 @@ export async function middleware(request: NextRequest) {
       httpOnly: true,
     });
 
-    if (isPublicRoute || isRootPath) {
+    if (isPublicRoute || pathname === "/") {
       return NextResponse.redirect(new URL("/overview", request.url));
     }
 
     return supabaseResponse;
   }
 
-  if (!user && !isPublicRoute && !isRootPath) {
+  if (!user && !isPublicRoute) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 

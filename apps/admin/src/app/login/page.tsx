@@ -28,7 +28,7 @@ export default function AdminLoginPage() {
       const res = await signIn(email, password);
       if (res.success) {
         toast.success("Welcome back!", { duration: 5000 });
-        router.push("/overview");
+        router.replace("/overview");
       }
     } catch (error: unknown) {
       toast.error(
