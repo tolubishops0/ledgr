@@ -43,7 +43,7 @@ export default function DashboardShell({
   const activeHref = useActiveHref(NAV);
   const activeLabel =
     NAV.find((n) => n.href === activeHref)?.label ?? "Overview";
-  console.log({ user });
+
   return (
     <UserProvider user={user}>
       <div className="min-h-screen bg-white dark:bg-zinc-950">
