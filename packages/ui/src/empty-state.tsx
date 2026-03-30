@@ -11,6 +11,7 @@ interface EmptyStateProps {
     onClick: () => void;
   };
   className?: string;
+  isSuspended?: boolean;
 }
 
 export function EmptyState({
@@ -18,6 +19,7 @@ export function EmptyState({
   subtext,
   action,
   className = "",
+  isSuspended,
 }: EmptyStateProps) {
   return (
     <div
@@ -65,7 +67,9 @@ export function EmptyState({
       </p>
       {action && (
         <div className="mt-5">
-          <Button onClick={action.onClick}>{action.label}</Button>
+          <Button disabled={isSuspended} onClick={action.onClick}>
+            {action.label}
+          </Button>
         </div>
       )}
     </div>

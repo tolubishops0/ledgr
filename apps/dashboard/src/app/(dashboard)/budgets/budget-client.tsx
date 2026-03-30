@@ -9,6 +9,7 @@ import { useState } from "react";
 
 import { toast } from "sonner";
 import { addBudget, deleteBudget, updateBudget } from "@/lib/core/actions";
+import { useUserContext } from "@/lib/context/user-context";
 
 export default function BudgetsClientPage({
   trans,
@@ -19,6 +20,7 @@ export default function BudgetsClientPage({
   cats: Category[];
   bgts: Budget[];
 }) {
+  const { user } = useUserContext();
   const [budgets, setBudgets] = useState<Budget[]>(bgts);
   const [categories] = useState<Category[]>(cats);
   const [transactions] = useState<Transaction[]>(trans);
@@ -26,7 +28,8 @@ export default function BudgetsClientPage({
   const [editBudget, setEditBudget] = useState<Budget | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
-  // CHECK FOR DUPLICATE BUDGER WHEN MISS CLAUDE COMES ON
+  // CHECK FOR DUPLICATE BUDGER WHEN MADAM BISHOPS COMES ON HAHAHAHA
+  const isSuspended = user?.status === "suspended";
 
   const handleSave = async (bgt: Budget) => {
     const tempId = crypto.randomUUID();
@@ -101,8 +104,6 @@ export default function BudgetsClientPage({
       !budgets.some((bug) => bug.category?.id === item.id),
   );
 
-  //   if (loading) return <BudgetsSkeleton />;
-
   return (
     <div className="p-4 md:p-6 space-y-6 max-w-5xl mx-auto">
       <PageHeader
@@ -111,6 +112,7 @@ export default function BudgetsClientPage({
         action={
           <Button
             size="sm"
+            disabled={isSuspended}
             onClick={() => {
               setEditBudget(null);
               setModalOpen(true);
@@ -126,6 +128,7 @@ export default function BudgetsClientPage({
         <EmptyState
           heading="No budgets set yet"
           subtext="Start by setting your first budget to track your spending."
+          isSuspended={isSuspended}
           action={{
             label: "Set Budget",
             onClick: () => {
@@ -141,6 +144,7 @@ export default function BudgetsClientPage({
               key={budget.id}
               budget={budget}
               index={i}
+              isSuspended={isSuspended}
               onEdit={() => {
                 setEditBudget(budget);
                 setModalOpen(true);

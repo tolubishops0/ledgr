@@ -143,11 +143,13 @@ export function BudgetCard({
   onDelete,
   categories,
   transactions,
+  isSuspended,
 }: {
   budget: Budget;
   index: number;
   onEdit: () => void;
   onDelete: () => void;
+  isSuspended: boolean;
   categories: Category[];
   transactions: Transaction[];
 }) {
@@ -166,7 +168,6 @@ export function BudgetCard({
     >
       <Card className="h-full">
         <CardContent className="py-4 space-y-3">
-          {/* Header */}
           <div className="flex items-start justify-between gap-2">
             <div className="flex items-center gap-3 min-w-0">
               <span
@@ -184,24 +185,24 @@ export function BudgetCard({
                 </p>
               </div>
             </div>
-            {/* Actions */}
-            <div className="flex items-center gap-0.5 shrink-0">
-              <button
-                onClick={onEdit}
-                className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-zinc-200 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
-              >
-                <Pencil size={13} />
-              </button>
-              <button
-                onClick={onDelete}
-                className="p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-              >
-                <Trash2 size={13} />
-              </button>
-            </div>
+            {!isSuspended && (
+              <div className="flex items-center gap-0.5 shrink-0">
+                <button
+                  onClick={onEdit}
+                  className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-zinc-200 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
+                >
+                  <Pencil size={13} />
+                </button>
+                <button
+                  onClick={onDelete}
+                  className="p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                >
+                  <Trash2 size={13} />
+                </button>
+              </div>
+            )}
           </div>
 
-          {/* Spent */}
           <p className="text-xl font-bold text-gray-900 dark:text-zinc-50">
             {formatCurrency(spent)}
             <span className="text-xs font-normal text-gray-400 dark:text-zinc-500 ml-1">

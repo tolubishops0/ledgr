@@ -26,6 +26,7 @@ import {
   deleteTransaction,
   updateTransaction,
 } from "@/lib/core/actions";
+import { useUserContext } from "@/lib/context/user-context";
 
 const initialFilters = {
   search: "",
@@ -42,6 +43,7 @@ export default function TransactionsClientPage({
   trans: Transaction[];
   cats: Category[];
 }) {
+  const { user } = useUserContext();
   const [transactions, setTransactions] = useState<Transaction[]>(trans);
 
   const [addOpen, setAddOpen] = useState(false);
@@ -53,7 +55,7 @@ export default function TransactionsClientPage({
   const [categories] = useState<Category[]>(cats);
 
   const clearFilters = () => setFilters(initialFilters);
-
+  const isSuspended = user?.status === "suspended";
   const hasActiveFilters =
     filters.search ||
     filters.type !== "all" ||
@@ -172,7 +174,11 @@ export default function TransactionsClientPage({
         title="Transactions"
         subtitle="Track your income and expenses"
         action={
-          <Button onClick={() => setAddOpen(true)} size="sm">
+          <Button
+            onClick={() => setAddOpen(true)}
+            size="sm"
+            disabled={user?.status === "suspended"}
+          >
             <Plus size={15} />
             Add Transaction
           </Button>
@@ -191,6 +197,7 @@ export default function TransactionsClientPage({
 
       {Object.keys(grouped).length === 0 ? (
         <EmptyState
+          isSuspended={isSuspended}
           heading="No transactions found"
           subtext="Try adjusting your filters or add a new transaction."
           action={{ label: "Add Transaction", onClick: () => setAddOpen(true) }}
@@ -210,6 +217,7 @@ export default function TransactionsClientPage({
                     key={t.id}
                     transaction={t}
                     index={i}
+                    isSuspended={isSuspended}
                     categories={categories}
                     onClick={() => setDetailTx(t)}
                     onDelete={() => setDeleteId(t.id)}

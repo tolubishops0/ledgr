@@ -41,7 +41,7 @@ export async function middleware(request: NextRequest) {
   if (user) {
     const { data: profile } = await supabase
       .from("profiles")
-      .select("id, email, full_name, avatar_url")
+      .select("id, email, full_name, avatar_url, status")
       .eq("id", user.id)
       .single();
 

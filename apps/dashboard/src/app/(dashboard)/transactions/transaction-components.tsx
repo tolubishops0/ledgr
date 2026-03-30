@@ -168,7 +168,6 @@ export function AddTransactionDrawer({
           />
         </div>
 
-        {/* Date */}
         <div>
           <Label>Date</Label>
           <Input
@@ -278,9 +277,12 @@ export function TransactionRow({
   index,
   categories,
   onEdit,
+  isSuspended,
 }: {
   categories: Category[];
   transaction: Transaction;
+  isSuspended: boolean;
+
   onEdit: (row: Transaction) => void;
   onDelete: (id: string) => void;
   onClick: () => void;
@@ -338,7 +340,7 @@ export function TransactionRow({
       </span>
 
       <AnimatePresence>
-        {hovered && (
+        {!isSuspended && hovered && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -348,13 +350,13 @@ export function TransactionRow({
           >
             <button
               onClick={() => onEdit(transaction)}
-              className="p-1.5 rounded text-gray-400 hover:text-gray-700 dark:hover:text-zinc-200 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
+              className="cursor-pointer p-1.5 rounded text-gray-400 hover:text-gray-700 dark:hover:text-zinc-200 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
             >
               <Pencil size={13} />
             </button>
             <button
               onClick={() => onDelete(transaction.id)}
-              className="p-1.5 rounded text-gray-400 hover:text-white hover:bg-red-500 transition-colors"
+              className="cursor-pointer p-1.5 rounded text-gray-400 hover:text-white hover:bg-red-500 transition-colors"
             >
               <Trash2 size={13} />
             </button>
@@ -419,7 +421,10 @@ export function TransactionsFilters({
             <Select
               value={filters.type}
               onChange={(e) =>
-                setFilters((f) => ({ ...f, type: e.target.value as 'all' | TransactionType }))
+                setFilters((f) => ({
+                  ...f,
+                  type: e.target.value as "all" | TransactionType,
+                }))
               }
               className="sm:w-36"
             >
@@ -449,7 +454,7 @@ export function TransactionsFilters({
               onChange={(e) =>
                 setFilters((f) => ({ ...f, fromDate: e.target.value }))
               }
-              className="sm:w-40"
+              className="sm:w-40 cursor-pointer"
             />
             <Input
               type="date"
@@ -457,7 +462,7 @@ export function TransactionsFilters({
               onChange={(e) =>
                 setFilters((f) => ({ ...f, toDate: e.target.value }))
               }
-              className="sm:w-40"
+              className="sm:w-40 cursor-pointer"
             />
           </div>
         </CardContent>
@@ -465,4 +470,3 @@ export function TransactionsFilters({
     </>
   );
 }
-
