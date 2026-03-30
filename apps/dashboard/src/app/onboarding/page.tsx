@@ -15,7 +15,7 @@ import {
   StepIncome,
   StepSuccess,
 } from "./onboarding-steps";
-import { getCategories } from "@/lib/core/categories";
+import { getCategoriesClient } from "@/lib/core/actions";
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -26,7 +26,7 @@ export default function OnboardingPage() {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   useEffect(() => {
-    getCategories().then(setCategories).catch(console.error);
+    getCategoriesClient().then(setCategories).catch(console.error);
   }, []);
 
   function goNext() {
