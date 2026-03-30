@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PUBLIC_ROUTES = ["/login", "/"];
+const PUBLIC_ROUTES = ["/login"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -28,7 +28,6 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const isPublic = PUBLIC_ROUTES.includes(pathname);
-  const isRootPath = pathname === "/";
 
   if (user) {
     const { data: profile } = await supabase
@@ -44,7 +43,7 @@ export async function middleware(request: NextRequest) {
       );
     }
 
-    if (isPublic || isRootPath) {
+    if (isPublic || pathname === "/") {
       return NextResponse.redirect(new URL("/overview", request.url));
     }
 

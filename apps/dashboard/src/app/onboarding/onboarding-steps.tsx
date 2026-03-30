@@ -21,12 +21,10 @@ export function StepIncome({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      {/* Logo */}
       <span className="text-3xl font-extrabold text-green-600 dark:text-green-400 mb-8 tracking-tight">
         Ledgr
       </span>
 
-      {/* Illustration */}
       <svg
         width="96"
         height="96"
@@ -183,7 +181,7 @@ export function StepBudgets({
         variant="ghost"
         size="md"
         loading={loading}
-        onClick={() => router.push("/")}
+        onClick={() => router.replace("/overview")}
         className="w-full justify-center mt-3  text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300 transition-colors "
       >
         Skip for now
