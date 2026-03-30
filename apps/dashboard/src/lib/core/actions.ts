@@ -1,14 +1,14 @@
 "use server";
 
 import type { Budget, Transaction } from "@ledgr/types";
-import { createClient } from "../supabase/client";
 import { notifyUser } from "./helpers";
 import { formatNaira, getMonthName } from "@ledgr/utils";
+import { createClient } from "../supabase/server";
 
 export const addTransaction = async (
   transaction: Omit<Transaction, "id" | "user_id" | "created_at">,
 ) => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -35,7 +35,7 @@ export const updateTransaction = async (
   id: string,
   updates: Partial<Transaction>,
 ) => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from("transactions")
     .update(updates)
@@ -59,7 +59,7 @@ export const updateTransaction = async (
 };
 
 export const deleteTransaction = async (id: string) => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error: fetchError } = await supabase
     .from("transactions")
     .select("*, category:categories(*)")
@@ -89,7 +89,7 @@ export const deleteTransaction = async (id: string) => {
 export const addBudget = async (
   budget: Omit<Budget, "id" | "user_id" | "created_at">,
 ) => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -113,7 +113,7 @@ export const addBudget = async (
 };
 
 export const updateBudget = async (id: string, updates: Partial<Budget>) => {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const cleanUpdates: Partial<Budget> = {
     ...(updates.amount !== undefined && { amount: updates.amount }),
@@ -146,7 +146,7 @@ export const updateBudget = async (id: string, updates: Partial<Budget>) => {
 };
 
 export const deleteBudget = async (id: string) => {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error: fetchError } = await supabase
     .from("budget")
@@ -170,15 +170,4 @@ export const deleteBudget = async (id: string) => {
     );
 
   return { success: true };
-};
-
-// this category fetches data for onboarding client
-export const getCategoriesClient = async () => {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from("categories")
-    .select("*")
-    .order("name");
-  if (error) throw new Error(error.message);
-  return data;
 };

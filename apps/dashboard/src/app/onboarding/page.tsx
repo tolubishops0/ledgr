@@ -15,7 +15,7 @@ import {
   StepIncome,
   StepSuccess,
 } from "./onboarding-steps";
-import { getCategoriesClient } from "@/lib/core/actions";
+import { getCategoriesClient } from "@/lib/core/categoriesClient";
 
 export default function OnboardingPage() {
   const router = useRouter();
