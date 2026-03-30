@@ -20,6 +20,7 @@ import {
 import type { Profile } from "@ledgr/types";
 import { signOut } from "@/lib/core/auth";
 import { UserProvider } from "@/lib/context/user-context";
+import SuspendedBanner from "./suspended-banner";
 
 const NAV = [
   { href: "/overview", label: "Overview", icon: LayoutDashboard },
@@ -42,7 +43,7 @@ export default function DashboardShell({
   const activeHref = useActiveHref(NAV);
   const activeLabel =
     NAV.find((n) => n.href === activeHref)?.label ?? "Overview";
-
+  console.log({ user });
   return (
     <UserProvider user={user}>
       <div className="min-h-screen bg-white dark:bg-zinc-950">
@@ -85,6 +86,7 @@ export default function DashboardShell({
               transition={{ duration: 0.2 }}
               className="h-full"
             >
+              {user.status === "suspended" && <SuspendedBanner />}
               {children}
             </motion.div>
           </AnimatePresence>
