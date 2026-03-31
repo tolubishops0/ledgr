@@ -1,3 +1,4 @@
+"use client";
 import { strengthMap, usePasswordStrength } from "@/lib/core/helpers";
 import { Profile } from "@ledgr/types";
 import { Avatar, Button, Input, Label } from "@ledgr/ui";
