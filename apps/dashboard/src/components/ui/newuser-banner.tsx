@@ -27,7 +27,7 @@ export function FirstTimeUserModal({
     <Modal isOpen={isOpen} onClose={onClose} title="Welcome to Ledgr!">
       <div className="flex flex-col items-center justify-center py-4 px-6 text-center space-y-4">
         <p className="text-sm text-gray-500 dark:text-zinc-400">
-          Let's get you started.{" "}
+          Let&apos;s get you started.{" "}
           {showBudgetButton
             ? "Create your first budget"
             : "Add your first transaction"}{" "}
@@ -35,7 +35,7 @@ export function FirstTimeUserModal({
         </p>
         <div className="flex gap-2">
           <Button size="sm" variant="outline" onClick={onClose}>
-            I'll find my way
+            I&apos;ll find my way
           </Button>
           {showBudgetButton && (
             <Button
