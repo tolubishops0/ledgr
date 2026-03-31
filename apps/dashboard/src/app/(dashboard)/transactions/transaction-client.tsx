@@ -102,9 +102,17 @@ export default function TransactionsClientPage({
       };
       const saved = await addTransaction(transToSend);
       toast.success("Transaction added!");
-
       setTransactions((prev) =>
-        prev.map((tx) => (tx.id === tempId ? saved : tx)),
+        prev.map((tx) =>
+          tx.id === tempId
+            ? {
+                ...tx,
+                amount: saved.amount,
+                category: saved.category,
+                date: saved.date,
+              }
+            : tx,
+        ),
       );
     } catch (error) {
       setTransactions((prev) => prev.filter((tx) => tx.id !== tempId));

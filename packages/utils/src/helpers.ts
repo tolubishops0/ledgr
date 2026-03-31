@@ -274,3 +274,30 @@ export const formatNaira = (amount: number, includeSymbol: boolean = true) => {
     maximumFractionDigits: 2,
   }).format(amount);
 };
+
+// "2026-03-24T12:34:56Z" => "4:09:03 PM"
+export const formatNotificationTime = (date?: string | number | Date) => {
+  if (!date) return "";
+
+  const now = new Date();
+  const target = new Date(date);
+
+  const diffMs = now.getTime() - target.getTime();
+  const diffMins = Math.floor(diffMs / (1000 * 60));
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffMins < 1) return "just now";
+  if (diffMins < 60) return `${diffMins} min ago`;
+  if (diffHours < 24) return `${diffHours} hr ago`;
+
+  if (diffDays === 1) return "yesterday";
+
+  if (diffDays < 7) return `${diffDays} days ago`;
+
+  return target.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+};

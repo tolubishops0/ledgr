@@ -48,11 +48,20 @@ export default function BudgetsClientPage({
         amount: bgt.amount,
         category_id: bgt.category_id,
         month: bgt.month,
-        category: bgt.category,
       };
       const saved = await addBudget(cleanBgt);
+
       toast.success("Budget added!");
-      setBudgets((prev) => prev.map((b) => (b.id === tempId ? saved : b)));
+      // setBudgets((prev) =>
+      //   prev.map((b) => (b.id === tempId ? { ...b, ...saved } : b)),
+      // );
+      setBudgets((prev) =>
+        prev.map((b) =>
+          b.id === tempId
+            ? { ...b, amount: saved.amount, category: saved.category }
+            : b,
+        ),
+      );
     } catch (error) {
       setBudgets((prev) => prev.filter((b) => b.id !== tempId));
       toast.error(
