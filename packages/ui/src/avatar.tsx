@@ -39,7 +39,7 @@ export function Avatar({
       <span className={base}>
         <Image
           src={src}
-          alt={alt ?? "user-image"}
+          alt={alt || initials || "user avatar"}
           className="w-full h-full object-cover object-top"
           onError={() => setImgError(true)}
         />
@@ -48,8 +48,33 @@ export function Avatar({
   }
 
   return (
-    <span className={[base, "bg-green-600 text-white font-semibold"].join(" ")}>
-      {initials ? initials.slice(0, 2).toUpperCase() : "G"}
+    <span
+      className={[base, "bg-gray-400 text-white font-semibold"].join(" ")}
+      title={initials || "User"}
+    >
+      {initials ? (
+        initials.slice(0, 2).toUpperCase()
+      ) : (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-3/4 h-3/4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M5.121 17.804A9 9 0 1118.879 6.196a9 9 0 01-13.758 11.608z"
+          />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+        </svg>
+      )}
     </span>
   );
 }
