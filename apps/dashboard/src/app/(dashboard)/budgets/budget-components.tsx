@@ -52,7 +52,7 @@ export function BudgetModal({
     if (!categoryId || !amount) return;
     const budget: Budget = {
       id: existing?.id ?? `b-${Date.now()}`,
-      user_id: "u1",
+      user_id: existing?.user_id || "ui",
       category_id: categoryId,
       amount: parseFloat(amount),
       month,
@@ -82,7 +82,11 @@ export function BudgetModal({
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
           >
-            <option value="">Select a category</option>
+            <option value="" disabled={!existing}>
+              {existing
+                ? `${existing.category?.icon} ${existing.category?.name}`
+                : "Select a category"}
+            </option>
             {unusedCategories?.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.icon} {c.name}
