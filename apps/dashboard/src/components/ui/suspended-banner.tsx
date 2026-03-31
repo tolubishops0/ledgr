@@ -5,7 +5,13 @@ export default function SuspendedBanner() {
     <div className="bg-amber-50 dark:bg-amber-900/20 border-b border-amber-200 dark:border-amber-800 px-4 py-2.5 text-center">
       <p className="text-xs text-amber-700 dark:text-amber-400">
         Your account has been suspended. You can view your data but cannot make
-        changes. Contact support for help.
+        changes.{" "}
+        <a
+          href="mailto:supportledger@gmail.com"
+          className="underline hover:text-amber-800 dark:hover:text-amber-300 font-semibold transition-colors"
+        >
+          Contact support for help.
+        </a>{" "}
       </p>
     </div>
   );
