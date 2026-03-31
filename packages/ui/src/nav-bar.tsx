@@ -30,8 +30,13 @@ export function Navbar({
   showUserBadge = false,
 }: NavbarProps) {
   const leftOffset =
-    window.innerWidth >= 1024 ? (sidebarCollapsed ? 64 : 240) : 0;
-
+    typeof window !== "undefined"
+      ? window.innerWidth >= 1024
+        ? sidebarCollapsed
+          ? 64
+          : 240
+        : 0
+      : 0;
   return (
     <motion.header
       initial={{ opacity: 0, y: -8 }}
