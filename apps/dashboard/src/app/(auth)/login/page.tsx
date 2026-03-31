@@ -31,6 +31,7 @@ export default function LoginPage() {
       const res = await signIn(email, password);
       if (res.success) {
         router.replace("/overview");
+
         toast.success("welcome back!", { duration: 5000 });
       }
     } catch (error: unknown) {

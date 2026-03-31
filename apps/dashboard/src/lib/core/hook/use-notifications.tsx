@@ -41,7 +41,7 @@ export function useNotifications(userId: string) {
         },
       )
       .subscribe((status) => {
-        console.log("subscription status:", status);
+        console.info("subscription status:", status);
       });
 
     return () => {

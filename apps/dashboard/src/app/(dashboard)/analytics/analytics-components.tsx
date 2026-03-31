@@ -35,7 +35,6 @@ export function IncomeVsExpensesChart({
     Income: d.income,
     Expenses: d.expense,
   }));
-  console.log({ data });
   return (
     <Card>
       <CardHeader>

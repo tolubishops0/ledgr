@@ -53,7 +53,6 @@ export default function OnboardingPage() {
           amount: Number(amount),
         })),
     };
-    console.log("Onboarding complete:", data);
     setLoading(true);
     try {
       const res = await completeOnboarding(data.monthly_income, data.budgets);
@@ -62,7 +61,6 @@ export default function OnboardingPage() {
         goNext();
       }
     } catch (error: unknown) {
-      console.log({ error });
       toast.error(
         error instanceof Error ? error.message : "Something went wrong",
       );

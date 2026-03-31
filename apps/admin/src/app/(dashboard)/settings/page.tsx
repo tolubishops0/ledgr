@@ -7,10 +7,7 @@ import { useState } from "react";
 import { useAdminContext } from "@/lib/context/admin-context";
 import { Profile, AdminTab } from "@ledgr/types";
 
-import {
-  AppearanceTab,
-  ProfileTab,
-} from "./settings-components";
+import { AppearanceTab, ProfileTab } from "./settings-components";
 import { updateProfile } from "@/lib/core/auth";
 import { toast } from "sonner";
 
@@ -41,7 +38,6 @@ export default function SettingsPage() {
       toast.success("Profile updated!");
       setUser(updated);
     } catch (error) {
-      console.log({ error });
       toast.error(
         error instanceof Error ? error.message : "Something went wrong",
       );
@@ -58,7 +54,8 @@ export default function SettingsPage() {
       <ProfileTab
         profile={user}
         onSave={handleProfileUpdate}
-        isLoading={isUpdating.profile} />
+        isLoading={isUpdating.profile}
+      />
     ),
 
     appearance: <AppearanceTab />,

@@ -1,9 +1,10 @@
 "use client";
 
 import { Bell, Check, CheckCheck, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNotifications } from "../../../apps/dashboard/src/lib/core/hook/use-notifications";
+import { formatNotificationTime } from "@ledgr/utils";
 
 export interface NotificationProps {
   userId: string;
@@ -21,8 +22,27 @@ export function NotificationDropdown({ userId }: NotificationProps) {
 
   const [open, setOpen] = useState(false);
 
+  const clickOutsideRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        clickOutsideRef.current &&
+        !clickOutsideRef.current.contains(e.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="relative">
+    <div ref={clickOutsideRef} className="relative">
       <button
         onClick={() => setOpen((o) => !o)}
         className="cursor-pointer relative p-2 rounded-lg text-gray-500 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
@@ -97,7 +117,7 @@ export function NotificationDropdown({ userId }: NotificationProps) {
                         {n.message}
                       </p>
                       <p className="text-[10px] text-gray-400 dark:text-zinc-500 mt-0.5">
-                        {new Date(n.created_at).toLocaleString()}
+                        {formatNotificationTime(n.created_at)}
                       </p>
                     </div>
 

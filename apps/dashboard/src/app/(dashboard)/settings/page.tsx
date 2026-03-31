@@ -27,11 +27,13 @@ export default function SettingsPage() {
   const [isUpdating, setIsUpdating] = useState({
     profile: false,
     settings: false,
-    delete: false,
   });
   const { user, setUser } = useUserContext();
-   const handleDeleteAccount = async () => {
-    console.log("Deleting account from Database...");
+
+  const handleDeleteAccount = () => {
+    toast.info(
+      "Account deletion isn’t available yet. Contact support to remove your account.",
+    );
   };
 
   const handleProfileUpdate = async (updatedData: Partial<Profile>) => {
@@ -47,7 +49,6 @@ export default function SettingsPage() {
       toast.success("Profile updated!");
       setUser(updated);
     } catch (error) {
-      console.log({ error });
       toast.error(
         error instanceof Error ? error.message : "Something went wrong",
       );
@@ -68,7 +69,6 @@ export default function SettingsPage() {
       await updatePassword(current, newPw);
       toast.success("Password updated!");
     } catch (error) {
-      console.log({ error });
       toast.error(
         error instanceof Error ? error.message : "Something went wrong",
       );
@@ -143,7 +143,7 @@ export default function SettingsPage() {
 
       <DangerZone
         onDelete={handleDeleteAccount}
-        isLoading={isUpdating.delete}
+        // isLoading={isUpdating.delete}
       />
     </div>
   );

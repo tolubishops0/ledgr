@@ -6,9 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard,
   ArrowLeftRight,
-  Target,
   BarChart2,
   Settings,
+  ChartPie,
 } from "lucide-react";
 import {
   BottomTabBar,
@@ -24,8 +24,8 @@ import SuspendedBanner from "./suspended-banner";
 
 const NAV = [
   { href: "/overview", label: "Overview", icon: LayoutDashboard },
+  { href: "/budgets", label: "Budgets", icon: ChartPie },
   { href: "/transactions", label: "Transactions", icon: ArrowLeftRight },
-  { href: "/budgets", label: "Budgets", icon: Target },
   { href: "/analytics", label: "Analytics", icon: BarChart2 },
   { href: "/settings", label: "Settings", icon: Settings },
 ];

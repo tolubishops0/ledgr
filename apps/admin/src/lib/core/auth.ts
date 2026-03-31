@@ -17,8 +17,6 @@ export const signIn = async (email: string, password: string) => {
     .eq("id", user.id)
     .single();
 
-  console.log({ profile });
-
   if (profileError || !profile?.is_admin) {
     throw new Error("Unauthorized: admin only. Use autofill to login.");
   }
