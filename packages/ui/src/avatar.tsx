@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 
 type AvatarSize = "sm" | "md" | "lg";
 
@@ -36,10 +37,10 @@ export function Avatar({
   if (src && !imgError) {
     return (
       <span className={base}>
-        <img
+        <Image
           src={src}
-          alt={alt ?? ""}
-          className="w-full h-full object-cover"
+          alt={alt ?? "user-image"}
+          className="w-full h-full object-cover object-top"
           onError={() => setImgError(true)}
         />
       </span>
@@ -48,7 +49,7 @@ export function Avatar({
 
   return (
     <span className={[base, "bg-green-600 text-white font-semibold"].join(" ")}>
-      {initials ? initials.slice(0, 2).toUpperCase() : "?"}
+      {initials ? initials.slice(0, 2).toUpperCase() : "G"}
     </span>
   );
 }
