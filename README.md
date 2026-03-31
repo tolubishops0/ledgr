@@ -4,10 +4,9 @@ A personal finance management monorepo built with Turborepo, containing two Next
 
 ## Apps
 
-| App       | Description                | Live                                                     |
-| --------- | -------------------------- | -------------------------------------------------------- |
-| Dashboard | User-facing finance app    | [ledgrr-app.vercel.app](https://ledgrr-app.vercel.app)   |
-| Admin     | Platform management portal | [ledgr-admin.vercel.app](https://ledgr-admin.vercel.app) |
+| App       | Description             | Live                                                   |
+| --------- | ----------------------- | ------------------------------------------------------ |
+| Dashboard | User-facing finance app | [ledgrr-app.vercel.app](https://ledgrr-app.vercel.app) |
 
 ## Demo Credentials
 
@@ -57,6 +56,7 @@ A personal finance management monorepo built with Turborepo, containing two Next
 
 - Platform-wide stats (users, transactions, volume)
 - User management — suspend and activate accounts
+- Real-time notifications
 - Read-only transaction view across all users
 - Platform analytics and most active users
 

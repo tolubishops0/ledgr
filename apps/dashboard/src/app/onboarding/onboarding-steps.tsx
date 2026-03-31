@@ -14,6 +14,8 @@ export function StepIncome({
   onChange: (v: string) => void;
   onNext: () => void;
 }) {
+  const router = useRouter();
+
   return (
     <motion.div
       className="flex flex-col items-center text-center"
@@ -88,16 +90,27 @@ export function StepIncome({
         <IncomeInput value={income} onChange={onChange} />
       </div>
 
-      <Button
-        type="submit"
-        variant="default"
-        size="md"
-        onClick={onNext}
-        disabled={!income || Number(income) <= 0}
-        className="w-full justify-center mt-2"
-      >
-        Continue
-      </Button>
+      <div className="flex items-center gap-3 w-full">
+        <Button
+          type="submit"
+          variant="ghost"
+          size="md"
+          onClick={() => router.replace("/overview")}
+          className="w-1/2 justify-center mt-3  text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300 transition-colors "
+        >
+          Skip for now
+        </Button>
+        <Button
+          type="submit"
+          variant="default"
+          size="md"
+          onClick={onNext}
+          disabled={!income || Number(income) <= 0}
+          className="w-1/2 justify-center mt-2"
+        >
+          Continue
+        </Button>
+      </div>
     </motion.div>
   );
 }
