@@ -82,8 +82,10 @@ export function BudgetModal({
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
           >
-            <option value={existing ? existing.category?.name : ""}>
-              Select a category
+            <option value="" disabled={!existing}>
+              {existing
+                ? `${existing.category?.icon} ${existing.category?.name}`
+                : "Select a category"}
             </option>
             {unusedCategories?.map((c) => (
               <option key={c.id} value={c.id}>
