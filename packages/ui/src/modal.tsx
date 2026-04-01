@@ -12,7 +12,6 @@ interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, title, children }: ModalProps) {
-  // ESC key handler
   React.useEffect(() => {
     if (!isOpen) return;
     const handler = (e: KeyboardEvent) => {
@@ -22,7 +21,6 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
     return () => document.removeEventListener("keydown", handler);
   }, [isOpen, onClose]);
 
-  // Focus trap ref
   const containerRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     if (isOpen) containerRef.current?.focus();
@@ -36,7 +34,6 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
           role="dialog"
           aria-modal="true"
         >
-          {/* Backdrop */}
           <motion.div
             className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             initial={{ opacity: 0 }}

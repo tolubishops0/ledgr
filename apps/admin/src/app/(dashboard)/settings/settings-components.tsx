@@ -1,3 +1,4 @@
+"use client";
 import { Profile } from "@ledgr/types";
 import { Avatar, Button, Input, Label } from "@ledgr/ui";
 import { initials } from "@ledgr/utils";
@@ -143,4 +144,3 @@ export function AppearanceTab() {
     </div>
   );
 }
-

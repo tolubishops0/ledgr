@@ -76,8 +76,28 @@ export function formatDateShort(date: string | undefined | null): string {
   }).format(d);
 }
 
+// "2026-05-12" => 12 may 2026"
+export function formatFullDate(input: string): string {
+  const [day, month, year] = input.split("/").map(Number);
+  const date = new Date(year, month - 1, day);
+  const options: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+  return date.toLocaleDateString("en-GB", options);
+}
+
+export function toInputDate(d: string) {
+  const dateObj = new Date(d);
+  const yyyy = dateObj.getFullYear();
+  const mm = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const dd = String(dateObj.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+
 // // "2026-05-12" => "May 2026"
-export function getMonthName(date: string | undefined | null): string {
+export function getMonthName(date: Date | string | undefined | null): string {
   if (!date) return "";
   const d = new Date(date);
   if (isNaN(d.getTime())) return "";

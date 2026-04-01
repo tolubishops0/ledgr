@@ -245,8 +245,8 @@ export function RecentTransactions({
 
   const recent = !noData
     ? [...transactions]
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .slice(0, 5)
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .slice(0, 5)
     : [];
 
   return (

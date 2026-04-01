@@ -1,7 +1,8 @@
+"use client";
+import { DatePicker } from "@/components/ui/date-picker";
 import { Budget, Category, Transaction } from "@ledgr/types";
 import {
   Modal,
-  Input,
   Button,
   Card,
   CardContent,
@@ -109,11 +110,11 @@ export function BudgetModal({
 
         <div>
           <Label htmlFor="month">Month</Label>
-          <Input
-            id="month"
-            type="month"
+
+          <DatePicker
+            type={"short"}
             value={month}
-            onChange={(e) => setMonth(e.target.value)}
+            onChange={(newDate) => setMonth(newDate)}
           />
         </div>
 
