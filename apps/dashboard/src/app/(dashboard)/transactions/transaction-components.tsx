@@ -92,6 +92,11 @@ export function AddTransactionDrawer({
       setCategoryId("");
     }
   };
+
+  const filteredCategories = categories.filter(
+    (item) => item.name !== "Salary",
+  );
+
   return (
     <Drawer
       isOpen={open}
@@ -134,7 +139,7 @@ export function AddTransactionDrawer({
         <div>
           <Label>Category</Label>
           <div className="grid grid-cols-4 gap-2">
-            {categories?.map((cat) => {
+            {filteredCategories?.map((cat) => {
               const selected = categoryId === cat.id;
               const isDisabled = type === "income";
               return (
