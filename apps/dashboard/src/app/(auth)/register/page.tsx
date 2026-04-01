@@ -65,7 +65,7 @@ export default function RegisterPage() {
         className="w-full max-w-sm"
       >
         <Card>
-          <CardContent className="py-6">
+          <CardContent className="py-6 max-h-130">
             <form onSubmit={handleRegister} className="space-y-4">
               <div>
                 <Label htmlFor="fullName">Full name</Label>
@@ -75,7 +75,7 @@ export default function RegisterPage() {
                   autoComplete="name"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Tolu Adeyemi"
+                  placeholder="Enter your full name"
                 />
               </div>
 

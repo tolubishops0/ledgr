@@ -3,13 +3,19 @@
 import * as React from "react";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { Card, CardContent } from "./card";
+import { ArrowUp, ArrowDown, Minus } from "lucide-react";
+import { useEffect } from "react";
 
 interface StatCardProps {
   icon?: React.ReactNode;
   label: string;
   value: string;
-  trend?: number;
   className?: string;
+  change?: number;
+  isUp?: boolean;
+  isDown?: boolean;
+  percent?: number;
+  isNew?: boolean;
 }
 
 function AnimatedNumber({ value }: { value: string }) {
@@ -26,7 +32,7 @@ function AnimatedNumber({ value }: { value: string }) {
     return `${prefix}${formatted}${suffix}`;
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isNumeric) return;
     const controls = animate(count, numeric, { duration: 1, ease: "easeOut" });
     return controls.stop;
@@ -40,14 +46,17 @@ export function StatCard({
   icon,
   label,
   value,
-  trend,
+  isDown,
+  isUp,
+  percent,
+  isNew,
   className = "",
 }: StatCardProps) {
-  const trendPositive = trend !== undefined && trend >= 0;
-  const trendColor = trendPositive
+  const trendColor = isUp
     ? "text-green-600 dark:text-green-400"
-    : "text-red-500 dark:text-red-400";
-
+    : isDown
+      ? "text-red-500 dark:text-red-400"
+      : "text-gray-400";
   return (
     <Card className={className}>
       <CardContent className="py-5 min-h-30">
@@ -59,9 +68,22 @@ export function StatCard({
             <p className="mt-1 text-2xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">
               <AnimatedNumber value={value} />
             </p>
-            {trend !== undefined && (
-              <p className={["mt-1 text-xs font-medium", trendColor].join(" ")}>
-                {trendPositive ? "↑" : "↓"} {Math.abs(trend)}%
+            {percent !== undefined && (
+              <p
+                className={[
+                  "mt-1 text-xs font-medium flex items-center gap-1",
+                  trendColor,
+                ].join(" ")}
+              >
+                {!isNew && (
+                  <>
+                    {isUp && <ArrowUp size={14} />}
+                    {isDown && <ArrowDown size={14} />}
+                    {!isUp && !isDown && <Minus size={14} />}
+                  </>
+                )}
+
+                {isNew ? "" : `${Math.abs(percent).toFixed(1)}%`}
               </p>
             )}
           </div>

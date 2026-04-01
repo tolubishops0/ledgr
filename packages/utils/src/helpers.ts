@@ -8,6 +8,12 @@ export const THIS_MONTH = (() => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
 })();
 
+export const LAST_MONTH = (() => {
+  const d = new Date();
+  d.setMonth(d.getMonth() - 1);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+})();
+
 export function shortMonth(ym: string) {
   const [y, m] = ym.split("-");
   return new Date(parseInt(y), parseInt(m) - 1, 1).toLocaleDateString("en-US", {
@@ -232,20 +238,24 @@ export function getCategoryById(
   return categories.find((c) => c.id === id);
 }
 
-// Get monthly income safely
-export function getMonthlyIncome(transactions: Transaction[] | undefined) {
-  if (!Array.isArray(transactions)) return 0;
+export function getMonthlyIncome(
+  transactions: Transaction[],
+  month = THIS_MONTH,
+) {
+  if (!transactions.length) return 0;
   return transactions
-    .filter((t) => t.type === "income" && t.date?.startsWith(THIS_MONTH))
-    .reduce((s, t) => s + (t.amount ?? 0), 0);
+    .filter((t) => t.type === "income" && t.date.startsWith(month))
+    .reduce((s, t) => s + t.amount, 0);
 }
 
-// Get monthly expenses safely
-export function getMonthlyExpenses(transactions: Transaction[] | undefined) {
-  if (!Array.isArray(transactions)) return 0;
+export function getMonthlyExpenses(
+  transactions: Transaction[],
+  month = THIS_MONTH,
+) {
+  if (!transactions.length || !month) return 0;
   return transactions
-    .filter((t) => t.type === "expense" && t.date?.startsWith(THIS_MONTH))
-    .reduce((s, t) => s + (t.amount ?? 0), 0);
+    .filter((t) => t.type === "expense" && t.date.startsWith(month))
+    .reduce((s, t) => s + t.amount, 0);
 }
 
 // Total balance safely
@@ -320,4 +330,30 @@ export const formatNotificationTime = (date?: string | number | Date) => {
     month: "short",
     year: "numeric",
   });
+};
+
+// export function calculateTrend(current: number, previous: number): number {
+//   if (previous === 0) return 0;
+//   return Math.round(((current - previous) / previous) * 100 * 10) / 10;
+// }
+
+export const calculateTrend = (current: number, previous: number) => {
+  if (previous === 0) {
+    return {
+      change: 0,
+      percent: 0,
+      isUp: false,
+      isDown: false,
+      isNew: true,
+    };
+  }
+  const change = current - previous;
+  const percent = (change / previous) * 100;
+
+  return {
+    change,
+    percent,
+    isUp: change > 0,
+    isDown: change < 0,
+  };
 };
