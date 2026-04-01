@@ -1,3 +1,4 @@
+"use client";
 import { AnimatePresence, motion } from "framer-motion";
 import { LogOut } from "lucide-react";
 
@@ -13,7 +14,7 @@ export function SignOut({ onLogout, collapsed }: SidebarProps) {
       className="cursor-pointer flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors duration-150 overflow-hidden
                  text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-zinc-50 hover:bg-gray-100 dark:hover:bg-zinc-800"
     >
-      <LogOut size={18} className="shrink-0" />
+      <LogOut size={18} className="shrink-0" aria-hidden="true" />
       <AnimatePresence initial={false}>
         {!collapsed && (
           <motion.span

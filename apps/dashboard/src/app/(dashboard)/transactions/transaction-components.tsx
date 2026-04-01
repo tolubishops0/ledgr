@@ -1,6 +1,14 @@
 "use client";
 import { Category, Transaction, TransactionType } from "@ledgr/types";
-import { Drawer, Input, Button, Card, CardContent, Select } from "@ledgr/ui";
+import {
+  Drawer,
+  Input,
+  Button,
+  Card,
+  CardContent,
+  Select,
+  Label,
+} from "@ledgr/ui";
 import {
   formatCurrency,
   formatDate,
@@ -11,10 +19,10 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Pencil, Search, Trash2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { Label } from "recharts";
 import { Badge } from "@ledgr/ui";
 import { MdClear } from "react-icons/md";
 import { IncomeInput } from "@ledgr/ui/src/income-input";
+import { DatePicker } from "@/components/ui/date-picker";
 
 export function AddTransactionDrawer({
   open,
@@ -171,10 +179,11 @@ export function AddTransactionDrawer({
 
         <div>
           <Label>Date</Label>
-          <Input
-            type="date"
-            value={formatDate(date)}
-            onChange={(e) => setDate(e.target.value)}
+
+          <DatePicker
+            type={"full"}
+            value={date}
+            onChange={(newDate) => setDate(newDate)}
           />
         </div>
 
@@ -449,21 +458,20 @@ export function TransactionsFilters({
               ))}
             </Select>
 
-            <Input
-              type="date"
+            <DatePicker
+              type={"empty"}
               value={filters.fromDate}
-              onChange={(e) =>
-                setFilters((f) => ({ ...f, fromDate: e.target.value }))
-              }
+              placeholder="Start date"
               className="sm:w-40 cursor-pointer"
+              onChange={(val) => setFilters((f) => ({ ...f, toDate: val }))}
             />
-            <Input
-              type="date"
+
+            <DatePicker
+              type={"empty"}
               value={filters.toDate}
-              onChange={(e) =>
-                setFilters((f) => ({ ...f, toDate: e.target.value }))
-              }
+              placeholder="End date"
               className="sm:w-40 cursor-pointer"
+              onChange={(val) => setFilters((f) => ({ ...f, toDate: val }))}
             />
           </div>
         </CardContent>
