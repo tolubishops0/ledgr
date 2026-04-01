@@ -1,5 +1,4 @@
 "use client";
-import { DatePicker } from "@/components/ui/date-picker";
 import { Budget, Category, Transaction } from "@ledgr/types";
 import {
   Modal,
@@ -9,6 +8,7 @@ import {
   ProgressBar,
   Label,
   Select,
+  Input,
 } from "@ledgr/ui";
 import { IncomeInput } from "@ledgr/ui/src/income-input";
 import {
@@ -40,7 +40,8 @@ export function BudgetModal({
   const [categoryId, setCategoryId] = useState(existing?.category_id ?? "");
   const [amount, setAmount] = useState(existing ? String(existing.amount) : "");
   const [month, setMonth] = useState(existing?.month ?? THIS_MONTH);
-
+  console.log({ month });
+  console.log({ THIS_MONTH });
   useEffect(() => {
     if (open) {
       setCategoryId(existing?.category_id ?? "");
@@ -110,11 +111,10 @@ export function BudgetModal({
 
         <div>
           <Label htmlFor="month">Month</Label>
-
-          <DatePicker
-            type={"short"}
+          <Input
+            type="month"
             value={month}
-            onChange={(newDate) => setMonth(newDate)}
+            onChange={(e) => setMonth(e.target.value)}
           />
         </div>
 

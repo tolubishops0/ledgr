@@ -14,7 +14,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Sector,
+  Cell,
 } from "recharts";
 import { Card, CardHeader, CardContent, Avatar } from "@ledgr/ui";
 import { formatCurrency, initials } from "@ledgr/utils";
@@ -146,7 +146,7 @@ export function TransactionTypeSplit({
                 paddingAngle={4}
               >
                 {typeSplit.map((entry) => (
-                  <Sector key={entry.name} fill={entry.color} />
+                  <Cell key={entry.name} fill={entry.color} />
                 ))}
               </Pie>
               <Tooltip
