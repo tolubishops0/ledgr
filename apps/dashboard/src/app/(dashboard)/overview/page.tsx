@@ -6,6 +6,7 @@ import {
   BudgetOverview,
   RecentTransactions,
 } from "./overview-components";
+import { FirstTimeUserModal } from "@/components/ui/firsttime-modal";
 
 export default async function OverviewPage() {
   const [transactions, categories, budgets] = await Promise.all([
@@ -31,6 +32,10 @@ export default async function OverviewPage() {
       <RecentTransactions
         transactions={transactions ?? []}
         categories={categories ?? []}
+      />
+      <FirstTimeUserModal
+        budgetsCount={budgets.length}
+        transactionsCount={transactions.length}
       />
     </div>
   );
