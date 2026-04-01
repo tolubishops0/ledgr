@@ -37,7 +37,13 @@ export function CardHeader({ children, className = "", ...props }: CardProps) {
 
 export function CardContent({ children, className = "", ...props }: CardProps) {
   return (
-    <div className={["px-5 py-3", className].join(" ")} {...props}>
+    <div
+      className={[
+        "px-5 py-3 max-h-100 overflow-auto scroll scrollbar-hide",
+        className,
+      ].join(" ")}
+      {...props}
+    >
       {children}
     </div>
   );

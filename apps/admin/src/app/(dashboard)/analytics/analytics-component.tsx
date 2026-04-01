@@ -187,7 +187,7 @@ export function MostActiveUsers({
   transactions: Transaction[];
 }) {
   const activeUsers = getMostActiveUsers(transactions, users);
-
+  const filteredUsers = activeUsers?.filter((user) => user.is_admin !== true);
   return (
     <Card>
       <CardHeader>
@@ -197,7 +197,7 @@ export function MostActiveUsers({
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
-          {activeUsers.map((user, i) => (
+          {filteredUsers?.map((user, i) => (
             <motion.div
               key={user.id}
               initial={{ opacity: 0, x: -8 }}
