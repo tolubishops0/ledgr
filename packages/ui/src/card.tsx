@@ -39,7 +39,7 @@ export function CardContent({ children, className = "", ...props }: CardProps) {
   return (
     <div
       className={[
-        "px-5 py-3 max-h-100 overflow-auto scroll scrollbar-hide",
+        "px-5 py-3 max-h-104 overflow-auto scroll scrollbar-hide",
         className,
       ].join(" ")}
       {...props}

@@ -91,7 +91,7 @@ export function StepIncome({
         <IncomeInput value={income} onChange={onChange} />
       </div>
 
-      <div className="flex items-center gap-3 w-full">
+      <div className="flex items-center gap-3 w-full px-3">
         <Button
           type="submit"
           variant="ghost"
@@ -135,7 +135,7 @@ export function StepBudgets({
   const filteredCategory = categories?.filter((item) => item.name !== "Salary");
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full pb-2 px-3">
       <h2 className="text-xl font-bold text-gray-900 dark:text-zinc-50 mb-1">
         Set your monthly budgets
       </h2>
@@ -170,13 +170,12 @@ export function StepBudgets({
         ))}
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 ">
         <Button
           onClick={onBack}
           variant="outline"
           size="md"
-          loading={loading}
-          className="w-full justify-center mt-2"
+          className="w-full justify-center mt-1"
         >
           Back
         </Button>
@@ -186,7 +185,7 @@ export function StepBudgets({
           size="md"
           loading={loading}
           onClick={onFinish}
-          className="w-full justify-center mt-2"
+          className="w-full justify-center"
         >
           Continue
         </Button>
@@ -196,9 +195,8 @@ export function StepBudgets({
         type="submit"
         variant="ghost"
         size="md"
-        loading={loading}
         onClick={() => router.replace("/overview")}
-        className="w-full justify-center mt-3  text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300 transition-colors "
+        className="pb-2 w-full justify-center mt-3  text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300 transition-colors"
       >
         Skip for now
       </Button>

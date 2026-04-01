@@ -70,7 +70,6 @@ export default function LoginPage() {
               Continue with Google
             </Button>
 
-            {/* Divider */}
             <div className="flex items-center gap-3 my-5">
               <div className="flex-1 h-px bg-gray-200 dark:bg-zinc-700" />
               <span className="text-xs text-gray-400 dark:text-zinc-500">

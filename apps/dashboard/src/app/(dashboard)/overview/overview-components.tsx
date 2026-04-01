@@ -20,6 +20,8 @@ import {
   getCategoryById,
   THIS_MONTH,
   formatMonthYear,
+  LAST_MONTH,
+  calculateTrend,
 } from "@ledgr/utils";
 import { motion } from "framer-motion";
 import { Wallet, TrendingUp, TrendingDown, ArrowLeftRight } from "lucide-react";
@@ -32,42 +34,55 @@ export function StatsSection({
 }: {
   transactions: Transaction[];
 }) {
+  // Current month
+  const balance = getTotalBalance(transactions);
+  const income = getMonthlyIncome(transactions);
+  const expenses = getMonthlyExpenses(transactions);
+  const count = getMonthlyCount(transactions);
+
+  // Last month
+  const lastIncome = getMonthlyIncome(transactions, LAST_MONTH);
+  const lastExpenses = getMonthlyExpenses(transactions, LAST_MONTH);
+  const lastCount = transactions?.filter((tran) =>
+    tran.date.startsWith(LAST_MONTH),
+  ).length;
+
   const stats = [
     {
       label: "Total Balance",
-      value: formatCurrency(getTotalBalance(transactions)),
-      trend: 12.5,
+      value: formatCurrency(balance),
       icon: <Wallet size={18} />,
     },
     {
       label: "Income This Month",
-      value: formatCurrency(getMonthlyIncome(transactions)),
-      trend: 8.2,
+      value: formatCurrency(income),
+      ...calculateTrend(income, lastIncome),
       icon: <TrendingUp size={18} />,
     },
     {
       label: "Expenses This Month",
-      value: formatCurrency(getMonthlyExpenses(transactions)),
-      trend: -3.1,
+      value: formatCurrency(expenses),
+      ...calculateTrend(expenses, lastExpenses),
       icon: <TrendingDown size={18} />,
     },
     {
       label: "Transactions",
-      value: String(getMonthlyCount(transactions)),
+      value: String(count),
+      ...calculateTrend(count, lastCount),
       icon: <ArrowLeftRight size={18} />,
     },
   ];
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      {stats.map((s, i) => (
+      {stats.map((stat, i) => (
         <motion.div
-          key={s.label}
+          key={stat.label}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: i * 0.08, duration: 0.3 }}
         >
-          <StatCard {...s} />
+          <StatCard {...stat} />
         </motion.div>
       ))}
     </div>
