@@ -1,3 +1,4 @@
+"use client";
 import { Category } from "@ledgr/types";
 import { Button } from "@ledgr/ui/src/button";
 import { IncomeInput } from "@ledgr/ui/src/income-input";
@@ -131,6 +132,8 @@ export function StepBudgets({
   onBack: () => void;
 }) {
   const router = useRouter();
+  const filteredCategory = categories?.filter((item) => item.name !== "Salary");
+
   return (
     <div className="flex flex-col h-full">
       <h2 className="text-xl font-bold text-gray-900 dark:text-zinc-50 mb-1">
@@ -141,7 +144,7 @@ export function StepBudgets({
       </p>
 
       <div className="flex-1 overflow-y-auto space-y-1 mb-6 max-h-85">
-        {categories?.map((cat) => (
+        {filteredCategory?.map((cat) => (
           <div
             key={cat.id}
             className="flex items-center justify-between gap-3 py-2.5 border-b border-gray-100 dark:border-zinc-800 last:border-0"
@@ -238,8 +241,6 @@ export function Confetti() {
     </div>
   );
 }
-
-// ─── Progress Dots ────────────────────────────────────────────────────────────
 
 export function ProgressDots({ step }: { step: number }) {
   return (

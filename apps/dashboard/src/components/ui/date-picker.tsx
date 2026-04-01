@@ -7,14 +7,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { formatFullDate, getMonthName } from "@ledgr/utils";
-import { useEffect } from "react";
-
-type PickerType = "empty" | "full" | "short";
+import { formatFullDate } from "@ledgr/utils";
+import { useMemo, useState } from "react";
 
 interface DatePickerProps {
-  type: PickerType;
-  value?: string;
+  value?: string; // Expecting ISO string or similar
   onChange: (date: string) => void;
   placeholder?: string;
   className?: string;
@@ -30,79 +27,57 @@ const baseInputClasses = [
 ].join(" ");
 
 export function DatePicker({
-  type,
   value,
   onChange,
   placeholder,
   className,
 }: DatePickerProps) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
-  const getInitialDate = () => {
-    if (value) return new Date(value);
-    if (type === "full" || type === "short") return new Date();
-    return undefined;
-  };
+  const { selectedDate, displayValue } = useMemo(() => {
+    if (!value) return { selectedDate: undefined, displayValue: undefined };
 
-  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(
-    getInitialDate(),
-  );
+    const date = new Date(value);
 
-  useEffect(() => {
-    if (value) setSelectedDate(new Date(value));
-    else if (type === "full" || type === "short") setSelectedDate(new Date());
-    else setSelectedDate(undefined);
-  }, [value, type]);
+    const formatted = formatFullDate(
+      `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
+    );
 
-  const displayValue = selectedDate
-    ? type === "full"
-      ? formatFullDate(
-          `${selectedDate.getDate()}/${selectedDate.getMonth() + 1}/${selectedDate.getFullYear()}`,
-        )
-      : type === "short"
-        ? getMonthName(selectedDate)
-        : ""
-    : "";
+    return {
+      selectedDate: date,
+      displayValue: formatted,
+    };
+  }, [value]); // 'value' is a string, so reference check is stable
 
   const handleDate = (date: Date | undefined) => {
     if (!date) return;
-    setSelectedDate(date);
-
-    if (type === "full") {
-      onChange(
-        formatFullDate(
-          `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
-        ),
-      );
-    } else if (type === "short") {
-      onChange(getMonthName(date));
-    } else {
-      onChange(""); // empty type
-    }
-
+    onChange(date.toISOString());
     setOpen(false);
   };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <input
-          type="text"
-          readOnly
-          value={displayValue}
-          placeholder={placeholder || (type === "empty" ? "Select date" : "")}
-          className={[baseInputClasses, "px-3 py-2 text-sm", className].join(
-            " ",
+        <button
+          type="button" // Good practice to prevent accidental form submits
+          className={[
+            baseInputClasses,
+            "px-3 py-2 text-sm text-left",
+            className,
+          ].join(" ")}
+        >
+          {displayValue ? (
+            displayValue
+          ) : (
+            <span className="text-gray-400 dark:text-zinc-500">
+              {placeholder}
+            </span>
           )}
-        />
+        </button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
-        <Calendar
-          mode="single"
-          required={false}
-          selected={selectedDate}
-          onSelect={handleDate}
-        />
+
+      <PopoverContent className="w-auto p-0" align="start">
+        <Calendar mode="single" selected={selectedDate} onSelect={handleDate} />
       </PopoverContent>
     </Popover>
   );

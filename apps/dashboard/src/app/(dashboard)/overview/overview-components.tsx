@@ -142,7 +142,7 @@ export function SpendingPie({
             <div key={cat.id} className="flex items-center gap-2 min-w-0">
               <span
                 className="w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0"
-                style={{ backgroundColor: cat.color + "22" }}
+                style={{ backgroundColor: cat.color + "50" }}
               >
                 {cat.icon}
               </span>

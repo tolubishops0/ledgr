@@ -185,11 +185,7 @@ export function AddTransactionDrawer({
         <div>
           <Label>Date</Label>
 
-          <DatePicker
-            type={"full"}
-            value={date}
-            onChange={(newDate) => setDate(newDate)}
-          />
+          <DatePicker value={date} onChange={(newDate) => setDate(newDate)} />
         </div>
 
         <Button
@@ -464,17 +460,15 @@ export function TransactionsFilters({
             </Select>
 
             <DatePicker
-              type={"empty"}
+              placeholder="Start Date"
               value={filters.fromDate}
-              placeholder="Start date"
               className="sm:w-40 cursor-pointer"
-              onChange={(val) => setFilters((f) => ({ ...f, toDate: val }))}
+              onChange={(val) => setFilters((f) => ({ ...f, fromDate: val }))}
             />
 
             <DatePicker
-              type={"empty"}
+              placeholder="End Date"
               value={filters.toDate}
-              placeholder="End date"
               className="sm:w-40 cursor-pointer"
               onChange={(val) => setFilters((f) => ({ ...f, toDate: val }))}
             />
