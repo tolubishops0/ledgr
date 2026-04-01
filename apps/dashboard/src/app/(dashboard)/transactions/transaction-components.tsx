@@ -1,3 +1,4 @@
+"use client";
 import { Category, Transaction, TransactionType } from "@ledgr/types";
 import { Drawer, Input, Button, Card, CardContent, Select } from "@ledgr/ui";
 import {
@@ -30,11 +31,11 @@ export function AddTransactionDrawer({
   editTransaction: Transaction | null;
   categories: Category[];
 }) {
-  const [amount, setAmount] = React.useState("");
-  const [type, setType] = React.useState<TransactionType>("expense");
-  const [categoryId, setCategoryId] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [date, setDate] = React.useState(today);
+  const [amount, setAmount] = useState("");
+  const [type, setType] = useState<TransactionType>("expense");
+  const [categoryId, setCategoryId] = useState("");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState(today);
 
   useEffect(() => {
     if (editTransaction) {
