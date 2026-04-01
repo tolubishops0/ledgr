@@ -151,7 +151,6 @@ export function CategoryBreakdownChart({
     }))
     .filter((c) => c.amount > 0)
     .sort((a, b) => b.amount - a.amount);
-
   return (
     <Card>
       <CardHeader>
@@ -190,7 +189,7 @@ export function CategoryBreakdownChart({
                   animationDuration={800}
                   shape={(props) => {
                     const { index } = props;
-                    return <Sector {...props} fill={data[index].color} />;
+                    return <Sector {...props} fill={data?.[index]?.color} />;
                   }}
                 />
                 <Tooltip
@@ -200,7 +199,7 @@ export function CategoryBreakdownChart({
             </ResponsiveContainer>
 
             <div className="space-y-2 w-full sm:w-auto shrink-0">
-              {data.map((cat) => (
+              {data?.map((cat) => (
                 <div key={cat.id} className="flex items-center gap-2">
                   <span
                     className="w-2.5 h-2.5 rounded-full shrink-0"

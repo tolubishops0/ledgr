@@ -47,7 +47,7 @@ export function DatePicker({
       selectedDate: date,
       displayValue: formatted,
     };
-  }, [value]); // 'value' is a string, so reference check is stable
+  }, [value]);
 
   const handleDate = (date: Date | undefined) => {
     if (!date) return;
@@ -59,7 +59,7 @@ export function DatePicker({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <button
-          type="button" // Good practice to prevent accidental form submits
+          type="button"
           className={[
             baseInputClasses,
             "px-3 py-2 text-sm text-left",
