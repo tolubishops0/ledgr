@@ -1,6 +1,7 @@
+"use client";
 import { strengthMap, usePasswordStrength } from "@/lib/core/helpers";
 import { Profile } from "@ledgr/types";
-import { Avatar, Button, ConfirmDialog, Input, Label } from "@ledgr/ui";
+import { Avatar, Button, Input, Label } from "@ledgr/ui";
 import { initials } from "@ledgr/utils";
 import { motion } from "framer-motion";
 import { Check, Eye, EyeOff, Monitor, Moon, Sun } from "lucide-react";
@@ -148,12 +149,12 @@ export function AppearanceTab() {
 
 export function DangerZone({
   onDelete,
-  isLoading,
+  // isLoading,
 }: {
-  onDelete: () => Promise<void>;
-  isLoading: boolean;
+  onDelete: () => void;
+  // isLoading: boolean;
 }) {
-  const [confirmOpen, setConfirmOpen] = useState(false);
+  // const [confirmOpen, setConfirmOpen] = useState(false);
 
   return (
     <>
@@ -162,26 +163,27 @@ export function DangerZone({
           Danger Zone
         </h3>
         <p className="text-sm text-gray-500 dark:text-zinc-400">
-          Permanently delete your account and all your data.
+          Account deletion isn’t available yet. If you’d like your account
+          removed, please contact support.
         </p>
         <Button
           variant="destructive"
           size="sm"
           className="cursor-pointer"
-          onClick={() => setConfirmOpen(true)}
+          onClick={onDelete}
         >
           Delete Account
         </Button>
       </div>
 
-      <ConfirmDialog
+      {/* <ConfirmDialog
         isOpen={confirmOpen}
         onClose={() => setConfirmOpen(false)}
         onConfirm={() => onDelete()}
         title="Delete Account"
         description="Are you absolutely sure? This cannot be undone."
         isLoading={isLoading}
-      />
+      /> */}
     </>
   );
 }

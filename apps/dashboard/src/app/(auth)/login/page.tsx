@@ -30,8 +30,9 @@ export default function LoginPage() {
     try {
       const res = await signIn(email, password);
       if (res.success) {
-        toast.success("welcome back!", { duration: 5000 });
         router.replace("/overview");
+
+        toast.success("welcome back!", { duration: 5000 });
       }
     } catch (error: unknown) {
       toast.error(

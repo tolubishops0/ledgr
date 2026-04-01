@@ -12,7 +12,7 @@ A personal finance management monorepo built with Turborepo, containing two Next
 
 **Dashboard** — create your own account or use:
 
-- Email: demo@ledgr.app
+- Email: m.ponfrey@ledgr.app
 - Password: demo123456
 
 **Admin Portal**
