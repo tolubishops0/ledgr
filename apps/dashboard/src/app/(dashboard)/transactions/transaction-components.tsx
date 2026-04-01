@@ -172,7 +172,7 @@ export function AddTransactionDrawer({
           <Label>Date</Label>
           <Input
             type="date"
-            value={date}
+            value={formatDate(date)}
             onChange={(e) => setDate(e.target.value)}
           />
         </div>
