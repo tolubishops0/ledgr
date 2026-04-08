@@ -1,3 +1,3 @@
 export default function RootPage() {
-    return '...';
+  return "Redirecting, please wait";
 }
