@@ -91,20 +91,15 @@ export default function TransactionsClientPage({
     };
     setTransactions((prev) => [optimistic, ...prev]);
     try {
-      const {
-        id: _id,
-        created_at: _created_at,
-        user_id: _user_id,
-        ...transToSend
-      } = trans;
-      // const transToSend = {
-      //   amount: trans.amount,
-      //   type: trans.type,
-      //   category_id: trans.category_id,
-      //   category: trans.category,
-      //   description: trans.description,
-      //   date: trans.date,
-      // };
+      // const { id: _id, created_at: _created_at, user_id: _user_id, ...transToSend } = trans;
+      const transToSend = {
+        amount: trans.amount,
+        type: trans.type,
+        category_id: trans.category_id,
+        category: trans.category,
+        description: trans.description,
+        date: trans.date,
+      };
       const saved = await addTransaction(transToSend);
       toast.success("Transaction added!");
       setTransactions((prev) =>
@@ -157,14 +152,14 @@ export default function TransactionsClientPage({
     setTransactions((prev) => prev.map((t) => (t.id === trans.id ? trans : t)));
 
     try {
-      const { created_at, user_id, category, ...transToSend } = trans;
-      // const transToSend = {
-      //   amount: trans.amount,
-      //   type: trans.type,
-      //   category_id: trans.category_id,
-      //   description: trans.description,
-      //   date: trans.date,
-      // };
+      // const { created_at, user_id, category, ...transToSend } = trans;
+      const transToSend = {
+        amount: trans.amount,
+        type: trans.type,
+        category_id: trans.category_id,
+        description: trans.description,
+        date: trans.date,
+      };
       const saved = await updateTransaction(trans.id, transToSend);
       setTransactions((prev) =>
         prev.map((t) => (t.id === trans.id ? saved : t)),
