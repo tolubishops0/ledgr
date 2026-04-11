@@ -150,7 +150,6 @@ export default function TransactionsClientPage({
     const prevTx = transactions.find((t) => t.id === trans.id);
     if (!prevTx) return;
     setTransactions((prev) => prev.map((t) => (t.id === trans.id ? trans : t)));
-
     try {
       // const { created_at, user_id, category, ...transToSend } = trans;
       const transToSend = {

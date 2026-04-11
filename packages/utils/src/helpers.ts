@@ -125,14 +125,14 @@ export function calculateBudgetProgress(
   return Math.min(100, Math.round((spent / budget) * 100));
 }
 
-// Group transactions by date with safe checks
+// Group transactions by date
 export function groupTransactionsByDate(
   transactions: Transaction[] | undefined,
 ): Record<string, Transaction[]> {
   if (!Array.isArray(transactions)) return {};
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-
+  console.log(transactions);
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
 
@@ -146,7 +146,6 @@ export function groupTransactionsByDate(
     const d = new Date(t.date);
     if (isNaN(d.getTime())) continue;
     d.setHours(0, 0, 0, 0);
-
     let label: string;
     if (d.getTime() === today.getTime()) {
       label = "Today";
@@ -156,7 +155,7 @@ export function groupTransactionsByDate(
       label = new Intl.DateTimeFormat("en-US", {
         month: "short",
         day: "numeric",
-        timeZone: "UTC",
+        // timeZone: "UTC",
       }).format(d);
     }
 
