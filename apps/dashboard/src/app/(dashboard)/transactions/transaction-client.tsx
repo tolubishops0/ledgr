@@ -157,7 +157,6 @@ export default function TransactionsClientPage({
         amount: trans.amount,
         type: trans.type,
         category_id: trans.category_id,
-        category: trans.category,
         description: trans.description,
         date: trans.date,
       };
