@@ -79,6 +79,7 @@ export function formatDateShort(date: string | undefined | null): string {
   return new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
+    timeZone: "UTC",
   }).format(d);
 }
 
