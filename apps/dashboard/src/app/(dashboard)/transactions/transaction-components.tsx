@@ -286,14 +286,13 @@ export function TransactionRow({
   onDelete,
   onClick,
   index,
-  categories,
   onEdit,
+  categories,
   isSuspended,
 }: {
   categories: Category[];
   transaction: Transaction;
   isSuspended: boolean;
-
   onEdit: (row: Transaction) => void;
   onDelete: (id: string) => void;
   onClick: () => void;

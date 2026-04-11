@@ -156,6 +156,7 @@ export function groupTransactionsByDate(
       label = new Intl.DateTimeFormat("en-US", {
         month: "short",
         day: "numeric",
+        timeZone: "UTC",
       }).format(d);
     }
 
