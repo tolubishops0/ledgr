@@ -139,7 +139,7 @@ export default function LoginPage() {
                 variant="default"
                 size="md"
                 loading={loading}
-                disabled={googleLoading}
+                disabled={googleLoading || !email || !password}
                 className="w-full justify-center"
               >
                 Sign in
