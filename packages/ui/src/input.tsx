@@ -13,7 +13,6 @@ const baseInputClasses = [
 
 const errorClasses = "border-red-500 dark:border-red-500 focus:ring-red-500";
 
-// --- Label ---
 interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   children: React.ReactNode;
 }

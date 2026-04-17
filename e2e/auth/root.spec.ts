@@ -1,7 +1,10 @@
-import { test, expect } from "@playwright/test";
+import test, { expect } from "@playwright/test";
 
-test("middleware works to redirect to login?", async ({ page }) => {
-  await page.goto("/", { waitUntil: "networkidle" });
+test("middleware redirects to login", async ({ browser }) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
 
-  await expect(page).toHaveURL(/\/login/);
+  await page.goto("http://localhost:3000");
+
+  await expect(page).toHaveURL(/login/);
 });

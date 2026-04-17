@@ -6,6 +6,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
+    "images.d.ts",
     "../../apps/admin/src/lib/core/hook/use-user.tsx"
   ],
   "exclude": ["node_modules"]
