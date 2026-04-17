@@ -9,6 +9,8 @@ import { Profile } from "@ledgr/types";
 import { initials } from "@ledgr/utils";
 import { SignOut } from "./sign-out";
 import { NavItem } from "./use-active-href";
+import Image from "next/image";
+import { Logo } from "./logo";
 
 interface SidebarProps {
   collapsed: boolean;
@@ -28,7 +30,6 @@ export function Sidebar({
   onToggle,
   navList,
   user,
-  logo = "Ledgr",
   badge,
   badgeColor = "amber",
   showUserBadge = false,
@@ -42,10 +43,13 @@ export function Sidebar({
       className="hidden lg:flex flex-col fixed left-0 top-0 h-screen z-30 bg-gray-50 dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-800 overflow-hidden"
     >
       <div className="flex items-center h-16 px-4 border-b border-gray-200 dark:border-zinc-800 shrink-0">
-        <Link href="/" className="flex items-center gap-2 overflow-hidden">
-          <span className="w-7 h-7 rounded-lg bg-green-600 flex items-center justify-center text-white font-extrabold text-sm shrink-0">
-            {logo[0]}
-          </span>
+        <Link
+          href="/overview"
+          className="flex items-center gap-2 overflow-hidden"
+        >
+          <div className="w-7 h-7 rounded-lg bg-green-600 flex items-center justify-center text-white font-extrabold text-sm shrink-0">
+            <Logo />
+          </div>
           <AnimatePresence initial={false}>
             {!collapsed && (
               <motion.div
@@ -57,7 +61,7 @@ export function Sidebar({
                 className="flex items-center gap-2 overflow-hidden"
               >
                 <span className="text-lg font-extrabold text-green-600 dark:text-green-400 tracking-tight whitespace-nowrap">
-                  {logo}
+                  Ledgr
                 </span>
                 {badge && showUserBadge && (
                   <span

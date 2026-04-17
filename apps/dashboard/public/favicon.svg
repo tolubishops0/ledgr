@@ -1,0 +1,29 @@
+<svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M25 25V75H75"
+    stroke="white"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <rect x="38" y="55" width="8" height="12" rx="1" fill="white" />
+  <rect x="50" y="45" width="8" height="22" rx="1" fill="white" />
+  <rect x="62" y="35" width="8" height="32" rx="1" fill="white" />
+
+  <path
+    d="M30 65L45 50L55 58L70 40"
+    stroke="#10B981" 
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  
+  <path
+    d="M62 40H70V48"
+    stroke="#10B981"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
